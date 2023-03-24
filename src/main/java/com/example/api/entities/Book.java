@@ -1,9 +1,6 @@
 package com.example.api.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +19,7 @@ public class Book {
     int id;
     @Column(name = "title")
     String title;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    Author author;
 }

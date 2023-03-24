@@ -1,17 +1,9 @@
 package com.example.api.entities;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 import java.util.Date;
-
+import java.util.List;
 @Data
 @Entity
 @AllArgsConstructor
@@ -28,4 +20,12 @@ public class Article {
     String title;
     @Column(name = "content")
     String content;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    Author author;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "article_category",
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"))
+    List<Category> categories;
 }

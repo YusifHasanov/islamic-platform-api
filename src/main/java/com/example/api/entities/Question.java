@@ -1,13 +1,12 @@
 package com.example.api.entities;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +22,10 @@ public class Question {
     String question;
     @Column(name = "answer")
     String answer;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "question_category",
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
+    List<Category> categories;
 }
