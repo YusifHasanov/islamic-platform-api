@@ -1,39 +1,38 @@
-package com.example.api.entities;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
+package com.example.api.core.dto.PUT;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
-import java.util.List;
+
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "playlists")
-public class Playlist {
+public class VideoPut {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     int id;
-    @NotBlank  @Size(max = 40)
-    @Column(name = "playlist_id")
-    String playlistId;
+    @NotBlank(message = "Video ID is required")
+    @Size(max = 15, message = "Video ID cannot be longer than 15 characters")
+    String videoId;
 
-    @Column(name = "published_at")
     Date publishedAt;
-    @NotBlank
-    @Column(name = "thumbnail")
+
+    @NotBlank(message = "Thumbnail is required")
     String thumbnail;
-    @NotBlank
-    @Column(name = "title")
+
+    @NotBlank(message = "Title is required")
     String title;
-    @OneToMany (mappedBy = "playlist")
-    List<Video> videos;
 }

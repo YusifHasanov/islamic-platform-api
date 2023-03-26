@@ -1,5 +1,6 @@
 package com.example.api.entities;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,10 @@ import java.util.List;
 public class Category {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     int id;
+    @NotBlank
     @Column(name = "name")
     String name;
     @ManyToMany(mappedBy = "categories")

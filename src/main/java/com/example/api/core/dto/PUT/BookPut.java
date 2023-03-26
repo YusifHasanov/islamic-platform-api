@@ -1,8 +1,10 @@
-package com.example.api.entities;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
+package com.example.api.core.dto.PUT;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,21 +13,15 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "books")
-public class Book {
+public class BookPut {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @NotBlank  @Size(max =50)
-    @Column(name = "title")
+    @NotBlank(message = "Title is required")
+    @Size(max =50, message = "Title is must be less than 50 characters")
     String title;
-    @NotBlank
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    Author author;
 }

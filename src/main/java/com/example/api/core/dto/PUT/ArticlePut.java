@@ -1,42 +1,33 @@
-package com.example.api.entities;
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
+package com.example.api.core.dto.PUT;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "videos")
-public class Video {
+public class ArticlePut {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @NotBlank @Size(max = 15)
-    @Column(name = "video_id")
-
-    String videoId;
-
-    @Column(name = "published_at")
+    @NotNull(message = "PublishedAt can not be empty")
     Date publishedAt;
-    @NotBlank
-    @Column(name = "thumbnail")
-    String thumbnail;
-    @NotBlank
-    @Column(name = "title")
+    @NotBlank(message = "Title is required")
     String title;
 
-    @ManyToOne
-    @JoinColumn(name = "playlist_id")
-    Playlist playlist;
+    @NotBlank(message = "Content is required")
+    String content;
 }

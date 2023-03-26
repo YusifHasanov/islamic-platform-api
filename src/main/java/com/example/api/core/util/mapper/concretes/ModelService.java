@@ -8,7 +8,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ModelService implements IModelService {
     private ModelMapper modelMapper;
 

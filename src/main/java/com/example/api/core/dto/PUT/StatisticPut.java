@@ -1,6 +1,9 @@
-package com.example.api.entities;
+package com.example.api.core.dto.PUT;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -10,27 +13,19 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "statistics")
-public class Statistic {
+public class StatisticPut {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     int id;
-    @NotNull
-    @Column(name = "view_count")
+    @NotBlank(message = "View Count is required")
     String viewCount;
-    @NotNull
-    @Column(name = "subscriber_count")
+    @NotBlank(message = "Subscriber Count  is required")
     String subscriberCount;
-
-    @Column(name = "hidden_subscriber")
     boolean hiddenSubscriber;
-    @NotNull
-    @Column(name = "video_count")
+    @NotBlank(message = "Video Count is required")
     String videoCount;
 }

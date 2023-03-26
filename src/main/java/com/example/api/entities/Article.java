@@ -1,5 +1,7 @@
 package com.example.api.entities;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import java.util.Date;
@@ -13,11 +15,15 @@ import java.util.List;
 public class Article {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
     @Column(name = "published_at")
     Date publishedAt;
+    @NotBlank
     @Column(name = "title")
     String title;
+    @NotBlank
     @Column(name = "content")
     String content;
     @ManyToOne
