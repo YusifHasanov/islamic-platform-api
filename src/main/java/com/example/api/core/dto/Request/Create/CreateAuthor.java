@@ -1,6 +1,5 @@
-package com.example.api.core.dto.POST;
+package com.example.api.core.dto.Request.Create;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthorPost {
+public class CreateAuthor {
 
 
     @NotBlank(message = "Name is required" )

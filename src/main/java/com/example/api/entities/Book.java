@@ -25,7 +25,7 @@ public class Book {
     @Column(name = "title")
     String title;
     @NotBlank
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     Author author;
 }

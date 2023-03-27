@@ -20,7 +20,6 @@ public class Category {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     int id;
     @NotBlank
     @Column(name = "name")
@@ -30,9 +29,9 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     List<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Category> children =new ArrayList<>();
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Category parent;
 }
