@@ -1,9 +1,9 @@
 package com.example.api.api;
 
 import com.example.api.business.concretes.VideoService;
-import com.example.api.core.dto.POST.VideoPost;
-import com.example.api.core.dto.PUT.VideoPut;
-import com.example.api.entities.Video;
+import com.example.api.core.dto.Request.Create.CreateVideo;
+import com.example.api.core.dto.Request.Update.UpdateVideo;
+import com.example.api.core.dto.Response.VideoResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,24 +20,24 @@ public class VideoController {
 
     @GetMapping
 
-    public ResponseEntity<List<Video>> getAll() {
+    public ResponseEntity<List<VideoResponse>> getAll() {
         return videoService.getAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Video> getById(@PathVariable int id) {
+    public ResponseEntity<VideoResponse> getById(@PathVariable int id) {
         return videoService.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<VideoPost> add(@Valid @RequestBody VideoPost Video) {
+    public ResponseEntity<CreateVideo> add(@Valid @RequestBody CreateVideo Video) {
         return videoService.add(Video);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<VideoPut> update(@Valid @RequestBody VideoPut Video , @PathVariable int id) {
+    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo Video) {
         return videoService.update(Video);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Video> delete(@PathVariable int id) {
+    public ResponseEntity<VideoResponse> delete(@PathVariable int id) {
         return videoService.delete(id);
     }
 }

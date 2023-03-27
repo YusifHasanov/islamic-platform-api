@@ -1,9 +1,9 @@
 package com.example.api.api;
 
 import com.example.api.business.concretes.ArticleService;
-import com.example.api.core.dto.POST.ArticlePost;
-import com.example.api.core.dto.PUT.ArticlePut;
-import com.example.api.dataAccess.ArticleRepository;
+import com.example.api.core.dto.Request.Create.CreateArticle;
+import com.example.api.core.dto.Request.Update.UpdateArticle;
+import com.example.api.core.dto.Response.ArticleResponse;
 import com.example.api.entities.Article;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,24 +20,27 @@ public class ArticleController {
 
     @GetMapping
 
-    public ResponseEntity<List<Article>> getAll() {
+    public ResponseEntity<List<ArticleResponse>> getAll() {
         return articleService.getAll();
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getById(@PathVariable int id) {
+    public ResponseEntity<ArticleResponse> getById(@PathVariable int id) {
         return articleService.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<ArticlePost> add(@Valid @RequestBody ArticlePost article) {
+    public ResponseEntity<CreateArticle> add(@Valid @RequestBody CreateArticle article) {
         return articleService.add(article);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ArticlePut> update(@Valid @RequestBody ArticlePut article , @PathVariable int id) {
+    public ResponseEntity<UpdateArticle> update(@Valid @RequestBody UpdateArticle article) {
         return articleService.update(article);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Article> delete(@PathVariable int id) {
+    public ResponseEntity<ArticleResponse> delete(@PathVariable int id) {
         return articleService.delete(id);
     }
 }

@@ -1,6 +1,5 @@
-package com.example.api.core.dto.POST;
+package com.example.api.core.dto.Request.Create;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VideoPost {
+public class CreateVideo {
 
     @NotBlank(message = "Video ID is required")
     @Size(max = 15, message = "Video ID cannot be longer than 15 characters")

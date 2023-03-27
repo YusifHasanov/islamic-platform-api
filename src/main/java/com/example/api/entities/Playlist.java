@@ -1,4 +1,5 @@
 package com.example.api.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +21,6 @@ public class Playlist {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     int id;
     @NotBlank  @Size(max = 40)
     @Column(name = "playlist_id")

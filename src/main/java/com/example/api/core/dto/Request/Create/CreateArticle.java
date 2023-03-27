@@ -1,8 +1,6 @@
-package com.example.api.core.dto.POST;
+package com.example.api.core.dto.Request.Create;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ArticlePost {
+public class CreateArticle {
     @NotNull(message = "PublishedAt can not be empty")
     Date publishedAt;
 

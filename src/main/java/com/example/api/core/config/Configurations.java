@@ -17,6 +17,6 @@ public class Configurations {
     @Bean
     public Validator validator() {
      return  Validation.buildDefaultValidatorFactory().getValidator();
-
     }
+
 }

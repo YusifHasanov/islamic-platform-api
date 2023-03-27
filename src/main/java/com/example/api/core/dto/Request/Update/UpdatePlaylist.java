@@ -1,4 +1,4 @@
-package com.example.api.core.dto.PUT;
+package com.example.api.core.dto.Request.Update;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,21 +14,26 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ArticlePut {
+public class UpdatePlaylist {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @NotNull(message = "PublishedAt can not be empty")
+
+    @NotBlank(message = "PlaylistId is required")
+    @Size(max = 40, message = "PlaylistId can not be longer than 40 characters")
+    String playlistId;
+    @NotNull(message = "PublishedAt can not be null")
     Date publishedAt;
+
+    @NotBlank(message = "Thumbnail is required")
+    String thumbnail;
+
     @NotBlank(message = "Title is required")
     String title;
 
-    @NotBlank(message = "Content is required")
-    String content;
 }

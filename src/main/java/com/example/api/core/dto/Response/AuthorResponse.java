@@ -1,7 +1,5 @@
-package com.example.api.core.dto.POST;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+package com.example.api.core.dto.Response;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +10,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryPost {
-    @NotBlank(message = "Name is required")
+public class AuthorResponse {
+    int id;
     String name;
+    String image;
 }

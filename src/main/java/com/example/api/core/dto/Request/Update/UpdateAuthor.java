@@ -1,11 +1,9 @@
-package com.example.api.core.dto.PUT;
-
+package com.example.api.core.dto.Request.Update;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,26 +11,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VideoPut {
+public class UpdateAuthor {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @NotBlank(message = "Video ID is required")
-    @Size(max = 15, message = "Video ID cannot be longer than 15 characters")
-    String videoId;
 
-    Date publishedAt;
+    @NotBlank(message = "Name is required" )
+    @Size(max = 35, message = "Name is should be less than 35 characters")
+    String name;
 
-    @NotBlank(message = "Thumbnail is required")
-    String thumbnail;
 
-    @NotBlank(message = "Title is required")
-    String title;
+    @NotBlank (message = "Image is required")
+    String image;
 }
