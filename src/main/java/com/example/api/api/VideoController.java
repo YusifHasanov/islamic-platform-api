@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/videos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class VideoController {
     
     private final VideoService videoService;
@@ -33,8 +34,8 @@ public class VideoController {
         return videoService.add(Video);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo Video) {
-        return videoService.update(Video);
+    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video) {
+        return videoService.update(video);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<VideoResponse> delete(@PathVariable int id) {

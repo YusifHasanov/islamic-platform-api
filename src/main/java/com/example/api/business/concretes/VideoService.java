@@ -1,10 +1,8 @@
 package com.example.api.business.concretes;
-
 import com.example.api.business.abstracts.IVideoService;
 import com.example.api.core.dto.Request.Create.CreateVideo;
 import com.example.api.core.dto.Request.Update.UpdateVideo;
 import com.example.api.core.dto.Response.VideoResponse;
-import com.example.api.core.util.Exceptions.Global.RequestBodyExceptedException;
 import com.example.api.core.util.Exceptions.VideoNotFoundException;
 import com.example.api.core.util.mapper.concretes.ModelService;
 import com.example.api.dataAccess.VideoRepository;
@@ -59,10 +57,6 @@ public class VideoService implements IVideoService {
 
     @Override
     public ResponseEntity<UpdateVideo> update(UpdateVideo video) {
-        if (video == null) {
-            System.out.println("Body is empty");
-            throw new RequestBodyExceptedException("Body is empty");
-        }
         Video findedVideo = videoRepository.findById(video.getId())
                 .orElseThrow(() -> new VideoNotFoundException("Video not found with id: " + video.getId()));
         Video mappedVideo = mapper.forRequest().map(video, Video.class);
