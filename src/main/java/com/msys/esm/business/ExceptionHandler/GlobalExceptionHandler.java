@@ -2,9 +2,11 @@ package com.msys.esm.business.ExceptionHandler;
 import com.msys.esm.core.util.Exceptions.Global.ErrorResponse;
 import com.msys.esm.core.util.Exceptions.Global.NotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,6 +41,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public  ResponseEntity<Object> handleVideoException(IllegalArgumentException ex) {
         ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public  ResponseEntity<Object> handleVideoException(HttpRequestMethodNotSupportedException ex) {
+        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.METHOD_NOT_ALLOWED.value());
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public  ResponseEntity<Object> handleVideoException(DataIntegrityViolationException ex) {
+        String message = "Cannot insert record because it violates a unique constraint.";
+        ErrorResponse response = new ErrorResponse(message, HttpStatus.INTERNAL_SERVER_ERROR.value());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

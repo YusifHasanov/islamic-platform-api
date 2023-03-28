@@ -17,35 +17,35 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class VideoController {
 
-    private final VideoService videoService;
+    private final VideoService service;
 
     @GetMapping
     public ResponseEntity<List<VideoResponse>> getAll() {
-        return videoService.getAll();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<VideoResponse> getById(@PathVariable int id) {
-        return videoService.getById(id);
+        return service.getById(id);
     }
 
     @GetMapping(params = "playlistId")
     public ResponseEntity<List<VideoResponse>> getByPlaylistId(@RequestParam("playlistId") String playlistId) {
-        return videoService.getByPlaylistId(playlistId);
+        return service.getByPlaylistId(playlistId);
     }
 
     @PostMapping
     public ResponseEntity<CreateVideo> add(@Valid @RequestBody CreateVideo Video) {
-        return videoService.add(Video);
+        return service.add(Video);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video,@PathVariable int id) {
-        return videoService.update(video,id);
+        return service.update(video,id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<VideoResponse> delete(@PathVariable int id) {
-        return videoService.delete(id);
+        return service.delete(id);
     }
 }

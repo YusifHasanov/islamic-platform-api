@@ -16,26 +16,26 @@ import java.util.List;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE )
 @RequestMapping("/api/statistics")
 public class StatisticsController {
-    StatisticsService statisticsService;
+    StatisticsService service;
 
     @GetMapping
     public ResponseEntity<List<StatisticResponse>> getAll(){
-        return statisticsService.getAll();
+        return service.getAll();
     }
     @GetMapping("/{id}")
     public ResponseEntity<StatisticResponse> getById(@PathVariable int id){
-        return statisticsService.getById(id);
+        return service.getById(id);
     }
     @PostMapping
     public ResponseEntity<CreateStatistic> add(@RequestBody CreateStatistic statisticRequest){
-        return statisticsService.add(statisticRequest);
+        return service.add(statisticRequest);
     }
     @PutMapping("/{id}")
     public ResponseEntity<UpdateStatistic> update(@PathVariable int id, @RequestBody UpdateStatistic statisticRequest){
-        return statisticsService.update(statisticRequest, id);
+        return service.update(statisticRequest, id);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<StatisticResponse> delete(@PathVariable int id){
-        return statisticsService.delete(id);
+        return service.delete(id);
     }
 }

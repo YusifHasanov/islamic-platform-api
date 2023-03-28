@@ -16,32 +16,32 @@ import java.util.List;
  @RequiredArgsConstructor
  @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
  public class PlaylistController {
-      PlaylistService playlistService;
+      PlaylistService service;
 
      @GetMapping
      public ResponseEntity<List<PlaylistResponse>> getAll() {
-         return playlistService.getAll();
+         return service.getAll();
      }
 
      @GetMapping("/{id}")
      public ResponseEntity<PlaylistResponse> getById(@PathVariable int id) {
-         return playlistService.getById(id);
+         return service.getById(id);
      }
 
      @PostMapping
      public ResponseEntity<CreatePlaylist> add(@Valid @RequestBody CreatePlaylist playlist) {
-         return playlistService.add(playlist);
+         return service.add(playlist);
      }
 
      @PutMapping("/{id}")
      public ResponseEntity<UpdatePlaylist> update(@Valid @RequestBody UpdatePlaylist playlist,@PathVariable int id) {
 
-         return playlistService.update(playlist,id);
+         return service.update(playlist,id);
      }
 
      @DeleteMapping("/{id}")
      public ResponseEntity<PlaylistResponse> delete(@PathVariable int id) {
-         return playlistService.delete(id);
+         return service.delete(id);
      }
  }
 

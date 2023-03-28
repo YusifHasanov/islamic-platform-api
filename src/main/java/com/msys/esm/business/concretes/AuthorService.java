@@ -25,10 +25,10 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public ResponseEntity<List<AuthorResponse>> getAll() {
-        List<Author> Authors = repository.findAll();
-        if (Authors.isEmpty())
+        List<Author> authors = repository.findAll();
+        if (authors.isEmpty())
             return ResponseEntity.noContent().build();
-        List<AuthorResponse> responseAuthors = Authors
+        List<AuthorResponse> responseAuthors = authors
                 .stream()
                 .map(a -> mapper.forResponse().map(a, AuthorResponse.class)).toList();
         return ResponseEntity.ok(responseAuthors);
@@ -36,35 +36,35 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public ResponseEntity<AuthorResponse> getById(int id) {
-        Author Author = repository.findById(id).orElseThrow(() ->
-                new AuthorNotFoundException("Author not found with id: " + id));
-        if (Author == null)
+        Author author = repository.findById(id).orElseThrow(() ->
+                new AuthorNotFoundException("author not found with id: " + id));
+        if (author == null)
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(mapper.forResponse().map(Author, AuthorResponse.class));
+        return ResponseEntity.ok(mapper.forResponse().map(author, AuthorResponse.class));
     }
 
     @Override
-    public ResponseEntity<CreateAuthor> add(CreateAuthor Author) {
-        Author mappedAuthor = mapper.forRequest().map(Author, Author.class);
+    public ResponseEntity<CreateAuthor> add(CreateAuthor author) {
+        Author mappedAuthor = mapper.forRequest().map(author, Author.class);
         repository.save(mappedAuthor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Author);
+        return ResponseEntity.status(HttpStatus.CREATED).body(author);
     }
 
     @Override
-    public ResponseEntity<UpdateAuthor> update(UpdateAuthor Author, int id) {
-        Author updateAuthor = repository.findById(Author.getId())
-                .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + Author.getId()));
+    public ResponseEntity<UpdateAuthor> update(UpdateAuthor author, int id) {
+        Author updateAuthor = repository.findById(author.getId())
+                .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + author.getId()));
         CheckIds.check(updateAuthor.getId(), id);
-        repository.save(mapper.forRequest().map(Author, Author.class));
-        return ResponseEntity.ok(Author);
+        repository.save(mapper.forRequest().map(author, Author.class));
+        return ResponseEntity.ok(author);
     }
 
     @Override
     public ResponseEntity<AuthorResponse> delete(int id) {
-        Author Author = repository.findById(id)
-                .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + id));
+        Author author = repository.findById(id)
+                .orElseThrow(() -> new AuthorNotFoundException("author not found with id: " + id));
 
-        repository.delete(Author);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mapper.forResponse().map(Author, AuthorResponse.class));
+        repository.delete(author);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mapper.forResponse().map(author, AuthorResponse.class));
     }
 }

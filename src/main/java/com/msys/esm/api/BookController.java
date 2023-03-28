@@ -18,31 +18,31 @@ import java.util.List;
 @RequestMapping("/api/books")
 @FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class BookController {
-    IBookService bookService;
+    IBookService service;
 
     @GetMapping
     public ResponseEntity<List<BookResponse>> getAll() {
-        return bookService.getAll();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getById(@PathVariable int id) {
-        return bookService.getById(id);
+        return service.getById(id);
     }
 
     @PostMapping
     public ResponseEntity<CreateBook> add(@Valid @RequestBody CreateBook Book) {
-        return bookService.add(Book);
+        return service.add(Book);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateBook> add(@Valid @RequestBody UpdateBook Book , @PathVariable int id) {
-        return bookService.update(Book,id);
+        return service.update(Book,id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BookResponse> delete(@PathVariable int id) {
-        return bookService.delete(id);
+        return service.delete(id);
     }
 
 }

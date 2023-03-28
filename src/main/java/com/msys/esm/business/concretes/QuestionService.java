@@ -25,46 +25,40 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public ResponseEntity<List<QuestionResponse>> getAll() {
-        List<Question> Questions = repository.findAll();
-        if (Questions.isEmpty())
-            return ResponseEntity.noContent().build();
-        List<QuestionResponse> responseQuestions = Questions
-                .stream()
-                .map(a -> mapper.forResponse().map(a, QuestionResponse.class)).toList();
+        List<Question> questions = repository.findAll();
+        List<QuestionResponse> responseQuestions = questions.stream().map(
+                a -> mapper.forResponse().map(a, QuestionResponse.class)).toList();
         return ResponseEntity.ok(responseQuestions);
     }
 
     @Override
     public ResponseEntity<QuestionResponse> getById(int id) {
-        Question Question = repository.findById(id).orElseThrow(() ->
-                new QuestionNotFoundException("Question not found with id: " + id));
-        if (Question == null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(mapper.forResponse().map(Question, QuestionResponse.class));
+        Question question = repository.findById(id).orElseThrow(() ->
+                new QuestionNotFoundException("question not found with id: " + id));
+        return ResponseEntity.ok(mapper.forResponse().map(question, QuestionResponse.class));
     }
 
     @Override
-    public ResponseEntity<CreateQuestion> add(CreateQuestion Question) {
-        Question mappedQuestion = mapper.forRequest().map(Question, Question.class);
+    public ResponseEntity<CreateQuestion> add(CreateQuestion question) {
+        Question mappedQuestion = mapper.forRequest().map(question, Question.class);
         repository.save(mappedQuestion);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Question);
+        return ResponseEntity.status(HttpStatus.CREATED).body(question);
     }
 
     @Override
-    public ResponseEntity<UpdateQuestion> update(UpdateQuestion Question, int id) {
-        Question updateQuestion = repository.findById(Question.getId())
-                .orElseThrow(() -> new QuestionNotFoundException("Question not found with id: " + Question.getId()));
+    public ResponseEntity<UpdateQuestion> update(UpdateQuestion question, int id) {
+        Question updateQuestion = repository.findById(question.getId())
+                .orElseThrow(() -> new QuestionNotFoundException("Question not found with id: " + question.getId()));
         CheckIds.check(updateQuestion.getId(), id);
-        repository.save(mapper.forRequest().map(Question, Question.class));
-        return ResponseEntity.ok(Question);
+        repository.save(mapper.forRequest().map(question, Question.class));
+        return ResponseEntity.ok(question);
     }
 
     @Override
     public ResponseEntity<QuestionResponse> delete(int id) {
-        Question Question = repository.findById(id)
-                .orElseThrow(() -> new QuestionNotFoundException("Question not found with id: " + id));
-
-        repository.delete(Question);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mapper.forResponse().map(Question, QuestionResponse.class));
+        Question question = repository.findById(id)
+                .orElseThrow(() -> new QuestionNotFoundException("question not found with id: " + id));
+        repository.delete(question);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mapper.forResponse().map(question, QuestionResponse.class));
     }
 }

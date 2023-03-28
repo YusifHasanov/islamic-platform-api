@@ -10,7 +10,7 @@ import java.util.List;
 public interface IAuthorService {
     ResponseEntity<List<AuthorResponse>> getAll();
     ResponseEntity<AuthorResponse> getById(int id);
-    ResponseEntity<CreateAuthor> add(CreateAuthor Author);
-    ResponseEntity<UpdateAuthor> update(UpdateAuthor Author,int id);
+    ResponseEntity<CreateAuthor> add(CreateAuthor author);
+    ResponseEntity<UpdateAuthor> update(UpdateAuthor author,int id);
     ResponseEntity<AuthorResponse> delete(int id);
 }

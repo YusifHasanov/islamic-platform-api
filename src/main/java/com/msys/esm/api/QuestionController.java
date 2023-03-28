@@ -14,31 +14,31 @@ import java.util.List;
 @RequestMapping("/api/questions")
 @RequiredArgsConstructor
 public class QuestionController {
-    private final QuestionService questionService;
+    private final QuestionService service;
 
     @GetMapping
 
     public ResponseEntity<List<QuestionResponse>> getAll() {
-        return questionService.getAll();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<QuestionResponse> getById(@PathVariable int id) {
-        return questionService.getById(id);
+        return service.getById(id);
     }
 
     @PostMapping
     public ResponseEntity<CreateQuestion> add(@Valid @RequestBody CreateQuestion Question) {
-        return questionService.add(Question);
+        return service.add(Question);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateQuestion> update(@Valid @RequestBody UpdateQuestion Question ,@PathVariable int id) {
-        return questionService.update(Question,id);
+        return service.update(Question,id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<QuestionResponse> delete(@PathVariable int id) {
-        return questionService.delete(id);
+        return service.delete(id);
     }
 }

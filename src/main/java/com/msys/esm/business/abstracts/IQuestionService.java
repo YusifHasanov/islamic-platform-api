@@ -10,7 +10,7 @@ import java.util.List;
 public interface IQuestionService {
     ResponseEntity<List<QuestionResponse>> getAll();
     ResponseEntity<QuestionResponse> getById(int id);
-    ResponseEntity<CreateQuestion> add(CreateQuestion Question);
-    ResponseEntity<UpdateQuestion> update(UpdateQuestion Question,int id);
+    ResponseEntity<CreateQuestion> add(CreateQuestion question);
+    ResponseEntity<UpdateQuestion> update(UpdateQuestion question,int id);
     ResponseEntity<QuestionResponse> delete(int id);
 }
