@@ -1,0 +1,17 @@
+package com.msys.esm.business.abstracts;
+
+
+import com.msys.esm.core.dto.Request.Create.CreatePlaylist;
+import com.msys.esm.core.dto.Request.Update.UpdatePlaylist;
+import com.msys.esm.core.dto.Response.PlaylistResponse;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
+public interface IPlaylistService {
+    ResponseEntity<List<PlaylistResponse>> getAll();
+    ResponseEntity<PlaylistResponse> getById(int id);
+    ResponseEntity<CreatePlaylist> add(CreatePlaylist playlist);
+    ResponseEntity<PlaylistResponse> delete(int id);
+    ResponseEntity<UpdatePlaylist> update(UpdatePlaylist  playlist,int id);
+}
