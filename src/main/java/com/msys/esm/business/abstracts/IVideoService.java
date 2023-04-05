@@ -5,6 +5,7 @@ import com.msys.esm.core.dto.Request.Update.UpdateVideo;
 import com.msys.esm.core.dto.Response.VideoResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public interface IVideoService {
@@ -14,4 +15,6 @@ public interface IVideoService {
     ResponseEntity<VideoResponse> delete(int id);
     ResponseEntity<UpdateVideo> update(UpdateVideo video,int id);
     ResponseEntity<List<VideoResponse>> getByPlaylistId(String playlistId);
+    //get videos with pagable
+//    ResponseEntity<List<VideoResponse>> getByPlaylistIdAndPageable(String playlistId, Pageable pageable);
 }

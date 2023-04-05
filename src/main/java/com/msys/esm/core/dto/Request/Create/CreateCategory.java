@@ -1,4 +1,5 @@
 package com.msys.esm.core.dto.Request.Create;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,4 +14,5 @@ import lombok.experimental.FieldDefaults;
 public class CreateCategory {
     @NotBlank(message = "Name is required")
     String name;
+    int parentId;
 }

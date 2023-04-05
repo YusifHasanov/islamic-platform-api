@@ -1,5 +1,4 @@
 package com.msys.esm.api;
-
 import com.msys.esm.business.concretes.ArticleService;
 import com.msys.esm.core.dto.Request.Create.CreateArticle;
 import com.msys.esm.core.dto.Request.Update.UpdateArticle;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,7 +17,6 @@ import java.util.List;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ArticleController {
     ArticleService service;
-
     @GetMapping
     public ResponseEntity<List<ArticleResponse>> getAll() {
         return service.getAll();

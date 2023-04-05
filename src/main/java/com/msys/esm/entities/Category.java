@@ -25,13 +25,16 @@ public class Category {
     @NotBlank
     @Column(name = "name")
     String name;
+
     @ManyToMany(mappedBy = "categories")
     List<Question> questions;
+
     @ManyToMany(mappedBy = "categories")
     List<Article> articles;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Category> children =new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Category parent;

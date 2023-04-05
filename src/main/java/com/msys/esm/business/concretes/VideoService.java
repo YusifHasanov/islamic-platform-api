@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 
@@ -74,4 +75,11 @@ public class VideoService implements IVideoService {
                 .map(v -> mapper.forResponse().map(v, VideoResponse.class)).toList();
         return ResponseEntity.ok(responseVideos);
     }
+
+//    @Override
+//    public ResponseEntity<List<VideoResponse>> getByPlaylistIdAndPageable(String playlistId, Pageable pageable) {
+//        List<Video> pageableVideos = videoRepository.findVideosByPlaylistId(playlistId,pageable);
+//          List<VideoResponse> response =pageableVideos.stream().map(v -> mapper.forResponse().map(v,VideoResponse.class)).toList();
+//        return ResponseEntity.ok(response);
+//    }
 }

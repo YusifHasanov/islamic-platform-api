@@ -1,5 +1,6 @@
 package com.msys.esm.core.dto.Response;
 
+import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +14,5 @@ import lombok.experimental.FieldDefaults;
 public class CategoryResponse {
     int id;
     String name;
+    int parentId;
 }
