@@ -18,20 +18,18 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "videos")
 public class Video  {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @NotBlank @Size(max = 15)
-    @Column(name = "video_id")
 
+    @Id
+    @Column(name = "video_id")
     String videoId;
 
     @Column(name = "published_at")
-    Date publishedAt;
+    String publishedAt;
+
     @NotBlank
     @Column(name = "thumbnail")
     String thumbnail;
+
     @NotBlank
     @Column(name = "title")
     String title;
@@ -39,4 +37,5 @@ public class Video  {
     @ManyToOne
     @JoinColumn(name = "playlist_id")
     Playlist playlist;
+
 }

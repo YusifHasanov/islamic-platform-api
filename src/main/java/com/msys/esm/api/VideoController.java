@@ -48,4 +48,9 @@ public class VideoController {
     public ResponseEntity<VideoResponse> delete(@PathVariable int id) {
         return service.delete(id);
     }
+
+    @PutMapping
+    public void updateVideos(){
+        service.addVideosToDb();
+    }
 }

@@ -15,6 +15,7 @@ public interface IVideoService {
     ResponseEntity<VideoResponse> delete(int id);
     ResponseEntity<UpdateVideo> update(UpdateVideo video,int id);
     ResponseEntity<List<VideoResponse>> getByPlaylistId(String playlistId);
+    void addVideosToDb();
     //get videos with pagable
 //    ResponseEntity<List<VideoResponse>> getByPlaylistIdAndPageable(String playlistId, Pageable pageable);
 }

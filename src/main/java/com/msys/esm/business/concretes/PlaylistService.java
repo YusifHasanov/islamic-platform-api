@@ -65,4 +65,5 @@ public class PlaylistService implements IPlaylistService {
         repository.save(mappedPlaylist);
         return ResponseEntity.ok(playlist);
     }
+
 }
