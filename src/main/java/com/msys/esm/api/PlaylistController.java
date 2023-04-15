@@ -24,7 +24,7 @@ import java.util.List;
      }
 
      @GetMapping("/{id}")
-     public ResponseEntity<PlaylistResponse> getById(@PathVariable int id) {
+     public ResponseEntity<PlaylistResponse> getById(@PathVariable String id) {
          return service.getById(id);
      }
 
@@ -34,13 +34,13 @@ import java.util.List;
      }
 
      @PutMapping("/{id}")
-     public ResponseEntity<UpdatePlaylist> update(@Valid @RequestBody UpdatePlaylist playlist,@PathVariable int id) {
+     public ResponseEntity<UpdatePlaylist> update(@Valid @RequestBody UpdatePlaylist playlist,@PathVariable String id) {
 
          return service.update(playlist,id);
      }
 
      @DeleteMapping("/{id}")
-     public ResponseEntity<PlaylistResponse> delete(@PathVariable int id) {
+     public ResponseEntity<PlaylistResponse> delete(@PathVariable String id) {
          return service.delete(id);
      }
  }

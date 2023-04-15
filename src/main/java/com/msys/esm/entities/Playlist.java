@@ -17,22 +17,20 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "playlists")
 public class Playlist  {
+
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
     @NotBlank  @Size(max = 40)
     @Column(name = "playlist_id")
-    String playlistId;
+    String id;
 
     @Column(name = "published_at")
-    Date publishedAt;
-    @NotBlank
+    String publishedAt;
+
     @Column(name = "thumbnail")
     String thumbnail;
+
     @NotBlank
     @Column(name = "title")
     String title;
-    @OneToMany (mappedBy = "playlist")
-    List<Video> videos;
+
 }

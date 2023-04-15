@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.util.*;
 
 @Data
 @Entity
@@ -26,7 +26,6 @@ public class Video  {
     @Column(name = "published_at")
     String publishedAt;
 
-    @NotBlank
     @Column(name = "thumbnail")
     String thumbnail;
 
@@ -34,8 +33,7 @@ public class Video  {
     @Column(name = "title")
     String title;
 
-    @ManyToOne
     @JoinColumn(name = "playlist_id")
-    Playlist playlist;
+    String playlistId;
 
 }

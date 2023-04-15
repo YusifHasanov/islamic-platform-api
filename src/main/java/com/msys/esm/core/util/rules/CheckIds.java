@@ -6,4 +6,8 @@ public interface CheckIds {
         if (entityId != id)
             throw new IllegalArgumentException("Id mismatch between request and entity");
     }
+    static void checkForPlayListOrVideo(String  entityId, String id) {
+        if (entityId != id)
+            throw new IllegalArgumentException("Id mismatch between request and entity");
+    }
 }

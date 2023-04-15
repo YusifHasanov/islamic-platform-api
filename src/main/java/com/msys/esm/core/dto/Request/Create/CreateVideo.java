@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,9 +20,8 @@ public class CreateVideo {
     @Size(max = 15, message = "Video ID cannot be longer than 15 characters")
     String videoId;
 
-    Date publishedAt;
+    String publishedAt;
 
-    @NotBlank(message = "Thumbnail is required")
     String thumbnail;
 
     @NotBlank(message = "Title is required")

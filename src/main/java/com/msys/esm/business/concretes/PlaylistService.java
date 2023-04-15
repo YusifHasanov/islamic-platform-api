@@ -33,7 +33,7 @@ public class PlaylistService implements IPlaylistService {
     }
 
     @Override
-    public ResponseEntity<PlaylistResponse> getById(int id) {
+    public ResponseEntity<PlaylistResponse> getById(String id) {
         Playlist playlist = repository.findById(id)
                 .orElseThrow(() -> new PlaylistNotFoundException("Playlist not found with id: " + id));
         PlaylistResponse response = mapper.forResponse().map(playlist, PlaylistResponse.class);
@@ -48,7 +48,7 @@ public class PlaylistService implements IPlaylistService {
     }
 
     @Override
-    public ResponseEntity<PlaylistResponse> delete(int id) {
+    public ResponseEntity<PlaylistResponse> delete(String id) {
         Playlist playlist = repository.findById(id)
                 .orElseThrow(() -> new PlaylistNotFoundException("Playlist not found with id: " + id));
         repository.deleteById(id);
@@ -57,10 +57,10 @@ public class PlaylistService implements IPlaylistService {
     }
 
     @Override
-    public ResponseEntity<UpdatePlaylist> update(UpdatePlaylist playlist,int id) {
+    public ResponseEntity<UpdatePlaylist> update(UpdatePlaylist playlist,String id) {
         Playlist updatePlaylist = repository.findById(playlist.getId())
                 .orElseThrow(() -> new PlaylistNotFoundException("Playlist not found with id: " + playlist.getId()));
-        CheckIds.check(updatePlaylist.getId(),id);
+        CheckIds.checkForPlayListOrVideo(updatePlaylist.getId(),id);
         Playlist mappedPlaylist = mapper.forRequest().map(playlist, Playlist.class);
         repository.save(mappedPlaylist);
         return ResponseEntity.ok(playlist);

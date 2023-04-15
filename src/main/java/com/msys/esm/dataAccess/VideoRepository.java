@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.awt.print.Pageable;
 import java.util.List;
 
-public interface VideoRepository extends JpaRepository<Video, Integer> {
-    List<Video> findVideosByPlaylistPlaylistId(String playlistId);
+public interface VideoRepository extends JpaRepository<Video, String> {
+    List<Video> findVideosByPlaylistId(String playlistId);
 //    List<Video> findVideosByPlaylistId(String playlistId , Pageable pageable);
 }

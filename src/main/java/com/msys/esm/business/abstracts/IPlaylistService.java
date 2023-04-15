@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface IPlaylistService {
     ResponseEntity<List<PlaylistResponse>> getAll();
-    ResponseEntity<PlaylistResponse> getById(int id);
+    ResponseEntity<PlaylistResponse> getById(String id);
     ResponseEntity<CreatePlaylist> add(CreatePlaylist playlist);
-    ResponseEntity<PlaylistResponse> delete(int id);
-    ResponseEntity<UpdatePlaylist> update(UpdatePlaylist  playlist,int id);
+    ResponseEntity<PlaylistResponse> delete(String id);
+    ResponseEntity<UpdatePlaylist> update(UpdatePlaylist  playlist,String id);
 }

@@ -25,7 +25,7 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VideoResponse> getById(@PathVariable int id) {
+    public ResponseEntity<VideoResponse> getById(@PathVariable String id) {
         return service.getById(id);
     }
 
@@ -40,17 +40,17 @@ public class VideoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video,@PathVariable int id) {
+    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video,@PathVariable String id) {
         return service.update(video,id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<VideoResponse> delete(@PathVariable int id) {
+    public ResponseEntity<VideoResponse> delete(@PathVariable String id) {
         return service.delete(id);
     }
 
     @PutMapping
     public void updateVideos(){
-        service.addVideosToDb();
+        service.addOrUpdateVideos();
     }
 }
