@@ -15,6 +15,9 @@ import com.msys.esm.entities.Video;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -83,6 +86,8 @@ public class VideoService implements IVideoService {
         return ResponseEntity.status(HttpStatus.CREATED).body(video);
     }
 
+    // Silinen video UExVNDMtUm9Db1NmTkc0aEZET3dzaDNUclJsanRidWV6Wi4yODlGNEE0NkRGMEEzMEQy
+
     @Override
     public ResponseEntity<VideoResponse> delete(String id) {
 
@@ -91,21 +96,22 @@ public class VideoService implements IVideoService {
 
         videoRepository.deleteById(id);
 
-        VideoResponse videoREsponse = mapper.forResponse().map(video, VideoResponse.class);
+        VideoResponse videoResponse = mapper.forResponse().map(video, VideoResponse.class);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(videoREsponse);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(videoResponse);
 
     }
 
     @Override
     public ResponseEntity<UpdateVideo> update(UpdateVideo video, String id) {
 
-        Video findedVideo = videoRepository.findById(video.getVideoId())
-                .orElseThrow(() -> new VideoNotFoundException("Video not found with id: " + video.getVideoId()));
+        Video findedVideo = videoRepository.findById(id)
+                .orElseThrow(() -> new VideoNotFoundException("Video not found with id: " + id));
 
         CheckIds.checkForPlayListOrVideo(findedVideo.getVideoId(), id);
-
-        videoRepository.save(mapper.forRequest().map(video, Video.class));
+        Video updatedVideo = mapper.forRequest().map(video, Video.class);
+        updatedVideo.setVideoId(id);
+        videoRepository.save(updatedVideo);
 
         return ResponseEntity.ok(video);
     }
@@ -145,6 +151,28 @@ public class VideoService implements IVideoService {
             throw new RuntimeException(e);
 
         }
+    }
+
+    @Override
+    public ResponseEntity<List<VideoResponse>> getSortedVideosBySpecificField(String fieldName) {
+
+        List<VideoResponse> videoResponses = videoRepository.findAll(Sort.by(fieldName)).stream()
+                .map(video -> mapper.forResponse().map(video, VideoResponse.class))
+                .toList();
+
+        return new ResponseEntity<>(videoResponses, HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<List<VideoResponse>> getByPlaylistIdAndPagination(String playListId) {
+
+        Pageable pageable = PageRequest.of(0, 2, Sort.by("videoId").descending());
+        List<VideoResponse> videoResponses = videoRepository.findVideosByPlaylistId(playListId, pageable).stream()
+                .map(video -> mapper.forResponse().map(video, VideoResponse.class))
+                .toList();
+
+        return new ResponseEntity<>(videoResponses, HttpStatus.OK);
     }
 
     public List<Playlist> getPlayLists() throws IOException {
@@ -195,6 +223,7 @@ public class VideoService implements IVideoService {
 
     }
 
+
     public static SearchListResponse sendRequest() throws IOException {
         return request.setKey(ConnectYoutubeApi.DEVELOPER_KEY)
                 .setChannelId(ConnectYoutubeApi.CHANNEL_ID)
@@ -212,11 +241,4 @@ public class VideoService implements IVideoService {
                 .execute();
     }
 
-
-//    @Override
-//    public ResponseEntity<List<VideoResponse>> getByPlaylistIdAndPageable(String playlistId, Pageable pageable) {
-//        List<Video> pageableVideos = videoRepository.findVideosByPlaylistId(playlistId,pageable);
-//          List<VideoResponse> response =pageableVideos.stream().map(v -> mapper.forResponse().map(v,VideoResponse.class)).toList();
-//        return ResponseEntity.ok(response);
-//    }
 }

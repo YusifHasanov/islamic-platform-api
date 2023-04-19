@@ -13,9 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VideoResponse {
-    int id;
     String videoId;
-    Date publishedAt;
+    String publishedAt;
     String thumbnail;
     String title;
     String PlaylistId;

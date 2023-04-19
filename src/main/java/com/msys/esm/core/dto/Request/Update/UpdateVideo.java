@@ -22,11 +22,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateVideo {
 
-    @Id
-    @NotBlank(message = "Video ID is required")
-    @Size(max = 15, message = "Video ID cannot be longer than 15 characters")
-    String videoId;
-
     String publishedAt;
 
     String thumbnail;

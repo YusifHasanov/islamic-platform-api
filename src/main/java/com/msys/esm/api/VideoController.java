@@ -6,6 +6,7 @@ import com.msys.esm.core.dto.Request.Update.UpdateVideo;
 import com.msys.esm.core.dto.Response.VideoResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +53,15 @@ public class VideoController {
     @PutMapping
     public void updateVideos(){
         service.addOrUpdateVideos();
+    }
+
+    @GetMapping("/sort/{sort}")
+    public ResponseEntity<List<VideoResponse>> getAllSorted(@PathVariable String sort){
+        return service.getSortedVideosBySpecificField(sort);
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<List<VideoResponse>> getAllPaged(@PathVariable  String  pageNumber){
+        return service.getByPlaylistIdAndPagination(pageNumber);
     }
 }
