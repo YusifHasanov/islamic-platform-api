@@ -20,10 +20,11 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdatePlaylist {
+
     @Id
     @NotBlank(message = "PlaylistId is required")
     @Size(max = 40, message = "PlaylistId can not be longer than 40 characters")
-    String id;
+    String playlistId;
     @NotNull(message = "PublishedAt can not be null")
     String publishedAt;
 
@@ -31,5 +32,6 @@ public class UpdatePlaylist {
 
     @NotBlank(message = "Title is required")
     String title;
+    int videoCount;
 
 }

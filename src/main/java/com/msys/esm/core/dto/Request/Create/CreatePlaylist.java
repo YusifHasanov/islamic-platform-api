@@ -18,7 +18,8 @@ public class CreatePlaylist {
 
     @NotBlank(message = "PlaylistId is required")
     @Size(max = 40, message = "PlaylistId can not be longer than 40 characters")
-    String id;
+    String playlistId;
+
     @NotNull(message = "PublishedAt can not be null")
     String publishedAt;
 
@@ -26,4 +27,5 @@ public class CreatePlaylist {
 
     @NotBlank(message = "Title is required")
     String title;
+    int videoCount;
 }

@@ -18,19 +18,23 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "authors")
 public class Author  {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     int id;
+
     @NotBlank @Size(max = 35)
     @Column(name = "name")
     String name;
+
     @NotBlank
     @Column(name = "image")
     String image;
+
     @OneToMany(mappedBy = "author")
     List<Article> articles;
+
     @OneToMany(mappedBy = "author")
     List<Book> books;
 }

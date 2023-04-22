@@ -21,7 +21,7 @@ public class Playlist  {
     @Id
     @NotBlank  @Size(max = 40)
     @Column(name = "playlist_id")
-    String id;
+    String playlistId;
 
     @Column(name = "published_at")
     String publishedAt;
@@ -32,5 +32,8 @@ public class Playlist  {
     @NotBlank
     @Column(name = "title")
     String title;
+
+    @Column(name = "video_count")
+    int videoCount;
 
 }

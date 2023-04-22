@@ -1,47 +1,53 @@
 package com.msys.esm.api;
+
 import com.msys.esm.business.concretes.PlaylistService;
 import com.msys.esm.core.dto.Request.Create.CreatePlaylist;
 import com.msys.esm.core.dto.Request.Update.UpdatePlaylist;
 import com.msys.esm.core.dto.Response.PlaylistResponse;
 import jakarta.validation.Valid;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
- @RestController
- @RequestMapping("/api/playlists")
- @RequiredArgsConstructor
- @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
- public class PlaylistController {
-      PlaylistService service;
+@RestController
+@RequestMapping("/api/playlists")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+public class PlaylistController {
 
-     @GetMapping
-     public ResponseEntity<List<PlaylistResponse>> getAll() {
-         return service.getAll();
-     }
+    private final PlaylistService playlistService;
 
-     @GetMapping("/{id}")
-     public ResponseEntity<PlaylistResponse> getById(@PathVariable String id) {
-         return service.getById(id);
-     }
+    @GetMapping
+    public ResponseEntity<List<PlaylistResponse>> getAll() {
+        return playlistService.getAll();
+    }
 
-     @PostMapping
-     public ResponseEntity<CreatePlaylist> add(@Valid @RequestBody CreatePlaylist playlist) {
-         return service.add(playlist);
-     }
+    @GetMapping("/{id}")
+    public ResponseEntity<PlaylistResponse> getById(@PathVariable String id) {
+        return playlistService.getById(id);
+    }
 
-     @PutMapping("/{id}")
-     public ResponseEntity<UpdatePlaylist> update(@Valid @RequestBody UpdatePlaylist playlist,@PathVariable String id) {
+    @PostMapping
+    public ResponseEntity<CreatePlaylist> add(@Valid @RequestBody CreatePlaylist playlist) {
+        return playlistService.add(playlist);
+    }
 
-         return service.update(playlist,id);
-     }
+    @PutMapping("/{id}")
+    public ResponseEntity<UpdatePlaylist> update(@Valid @RequestBody UpdatePlaylist playlist, @PathVariable String id) {
 
-     @DeleteMapping("/{id}")
-     public ResponseEntity<PlaylistResponse> delete(@PathVariable String id) {
-         return service.delete(id);
-     }
- }
+        return playlistService.update(playlist, id);
+    }
+
+    @PutMapping
+    public void updateAll() {
+        playlistService.updatePlaylists();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PlaylistResponse> delete(@PathVariable String id) {
+        return playlistService.delete(id);
+    }
+}
 

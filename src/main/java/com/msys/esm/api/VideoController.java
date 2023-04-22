@@ -1,12 +1,12 @@
 package com.msys.esm.api;
 
+import com.msys.esm.business.concretes.PlaylistService;
 import com.msys.esm.business.concretes.VideoService;
 import com.msys.esm.core.dto.Request.Create.CreateVideo;
 import com.msys.esm.core.dto.Request.Update.UpdateVideo;
 import com.msys.esm.core.dto.Response.VideoResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +19,7 @@ import java.util.List;
 public class VideoController {
 
     private final VideoService service;
+    private final PlaylistService playlistService;
 
     @GetMapping
     public ResponseEntity<List<VideoResponse>> getAll() {
@@ -41,8 +42,8 @@ public class VideoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video,@PathVariable String id) {
-        return service.update(video,id);
+    public ResponseEntity<UpdateVideo> update(@Valid @RequestBody UpdateVideo video, @PathVariable String id) {
+        return service.update(video, id);
     }
 
     @DeleteMapping("/{id}")
@@ -51,17 +52,22 @@ public class VideoController {
     }
 
     @PutMapping
-    public void updateVideos(){
+    public void updateVideos() {
         service.addOrUpdateVideos();
     }
 
-    @GetMapping("/sort/{sort}")
-    public ResponseEntity<List<VideoResponse>> getAllSorted(@PathVariable String sort){
-        return service.getSortedVideosBySpecificField(sort);
+    @GetMapping(params = {"sortBy", "sortOrder"})
+    public ResponseEntity<List<VideoResponse>> getAllSorted(@RequestParam(name = "sortBy") String fieldName, @RequestParam(name = "sortOrder") String sortOrder) {
+        return service.getSortedVideosBySpecificField(fieldName, sortOrder);
     }
 
-    @GetMapping("/page/{pageNumber}")
-    public ResponseEntity<List<VideoResponse>> getAllPaged(@PathVariable  String  pageNumber){
-        return service.getByPlaylistIdAndPagination(pageNumber);
+    @GetMapping(params = {"playlistId", "sortBy", "sortOrder"})
+    public ResponseEntity<List<VideoResponse>> getPlayListVideosSorted(@RequestParam(name = "sortBy") String fieldName, @RequestParam String sortOrder, @RequestParam String playlistId) {
+        return service.getSortedPlayListVideosBySpecificField(fieldName, playlistId, sortOrder);
+    }
+
+    @GetMapping(params = {"playlistId", "page", "maxResult"})
+    public ResponseEntity<?> getAllPaged(@RequestParam String playlistId,@RequestParam int page,@RequestParam(name = "maxResult") int size) {
+        return service.getByPlaylistIdAndPagination(playlistId, page, size);
     }
 }

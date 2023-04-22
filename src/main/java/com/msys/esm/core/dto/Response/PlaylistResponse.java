@@ -13,9 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PlaylistResponse {
-    int id;
     String playlistId;
-    Date publishedAt;
+    String publishedAt;
     String thumbnail;
     String title;
+    int videoCount;
 }
