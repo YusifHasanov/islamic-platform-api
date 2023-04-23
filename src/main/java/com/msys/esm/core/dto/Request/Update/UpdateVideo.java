@@ -30,5 +30,5 @@ public class UpdateVideo {
     String title;
 
     @NotBlank(message = "Playlist ID is required")
-    String PlaylistId;
+    String playlistId;
 }

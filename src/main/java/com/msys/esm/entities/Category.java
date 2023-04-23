@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,24 +20,27 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "categories")
 public class Category {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
     @NotBlank
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     String name;
 
     @ManyToMany(mappedBy = "categories")
-    List<Question> questions;
+    Set<Question> questions;
 
     @ManyToMany(mappedBy = "categories")
-    List<Article> articles;
+    Set<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.EAGER)
-    private List<Category> children =new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.LAZY)
+    private Set<Category> children =new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Category parent;
+
 }

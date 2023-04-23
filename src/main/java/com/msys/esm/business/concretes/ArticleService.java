@@ -8,7 +8,11 @@ import com.msys.esm.core.util.Exceptions.ArticleNotFoundException;
 import com.msys.esm.core.util.mapper.concretes.ModelService;
 import com.msys.esm.core.util.rules.CheckIds;
 import com.msys.esm.dataAccess.ArticleRepository;
+import com.msys.esm.dataAccess.AuthorRepository;
+import com.msys.esm.dataAccess.CategoryRepository;
 import com.msys.esm.entities.Article;
+import com.msys.esm.entities.Author;
+import com.msys.esm.entities.Category;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +29,8 @@ import java.util.List;
 public class ArticleService implements IArticleService {
     ArticleRepository articleRepository;
     ModelService mapper;
+    AuthorRepository authorRepository;
+    CategoryRepository categoryRepository;
 
     @Override
     public ResponseEntity<List<ArticleResponse>> getAll() {
@@ -32,7 +39,16 @@ public class ArticleService implements IArticleService {
             return ResponseEntity.noContent().build();
         List<ArticleResponse> responseArticles = articles
                 .stream()
-                .map(a -> mapper.forResponse().map(a, ArticleResponse.class)).toList();
+                .map(a -> {
+                    ArticleResponse articleResponse = new ArticleResponse();
+                    articleResponse.setId(a.getId());
+                    articleResponse.setAuthor(a.getAuthor());
+                    articleResponse.setTitle(a.getTitle());
+                    articleResponse.setContent(a.getContent());
+                    articleResponse.setPublishedAt(a.getPublishedAt());
+                    articleResponse.setCategories(articleRepository.getCategoriesById(a.getId()));
+                    return articleResponse;
+                }).toList();
         return ResponseEntity.ok(responseArticles);
     }
 
@@ -47,9 +63,23 @@ public class ArticleService implements IArticleService {
 
     @Override
     public ResponseEntity<CreateArticle> add(CreateArticle article) {
-        Article mappedArticle = mapper.forRequest().map(article, Article.class);
+
+        Author author = authorRepository.findById(article.getAuthor_id())
+                .orElseThrow(() -> new ArticleNotFoundException("Author not found with id: " + article.getAuthor_id()));
+
+        Article mappedArticle = mapper.forResponse().map(article, Article.class);
+        Set<Category> categories = mappedArticle.getCategories();
+        mappedArticle.setAuthor(author);
+        article.getCategories().forEach(c -> {
+            Category category = categoryRepository.findById(c)
+                    .orElseThrow(() -> new ArticleNotFoundException("Category not found with id: " + c));
+            categories.add(category);
+        });
+        mappedArticle.setCategories(categories);
         articleRepository.save(mappedArticle);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
+
     }
 
     @Override

@@ -28,6 +28,6 @@ public class CreateVideo {
     String title;
 
     @NotBlank(message = "Playlist ID is required")
-    String PlaylistId;
+    String playlistId;
 
 }

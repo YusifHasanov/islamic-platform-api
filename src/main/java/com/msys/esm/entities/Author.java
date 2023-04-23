@@ -1,5 +1,6 @@
 package com.msys.esm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,16 +27,17 @@ public class Author  {
     int id;
 
     @NotBlank @Size(max = 35)
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     String name;
 
     @NotBlank
     @Column(name = "image")
     String image;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
-    List<Article> articles;
+    Set<Article> articles;
 
     @OneToMany(mappedBy = "author")
-    List<Book> books;
+    Set<Book> books;
 }

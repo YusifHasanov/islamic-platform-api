@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,13 +18,16 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "questions")
 public class Question  {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
     @NotBlank
     @Column(name = "question")
     String question;
+
     @NotBlank
     @Column(name = "answer")
     String answer;
@@ -32,5 +36,6 @@ public class Question  {
     @JoinTable(name = "question_category",
             joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
-    List<Category> categories;
+    Set<Category> categories;
+
 }

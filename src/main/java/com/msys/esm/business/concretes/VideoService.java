@@ -68,12 +68,12 @@ public class VideoService implements IVideoService {
     }
 
     @Override
-    public ResponseEntity<List<VideoResponse>> getAll() {
-        List<Video> videos = videoRepository.findAll();
-        List<VideoResponse> responseVideos = videos.stream()
-                .map(v -> mapper.forResponse().map(v, VideoResponse.class)).toList();
-        return ResponseEntity.ok(responseVideos);
-    }
+        public ResponseEntity<List<VideoResponse>> getAll() {
+            List<Video> videos = videoRepository.findAll();
+            List<VideoResponse> responseVideos = videos.stream()
+                    .map(v -> mapper.forResponse().map(v, VideoResponse.class)).toList();
+            return ResponseEntity.ok(responseVideos);
+        }
 
     @Override
     public ResponseEntity<VideoResponse> getById(String id) {

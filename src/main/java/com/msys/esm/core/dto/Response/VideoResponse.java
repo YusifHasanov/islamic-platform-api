@@ -17,5 +17,5 @@ public class VideoResponse {
     String publishedAt;
     String thumbnail;
     String title;
-    String PlaylistId;
+    String playlistId;
 }

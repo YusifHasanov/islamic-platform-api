@@ -12,12 +12,12 @@ import com.msys.esm.entities.Category;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Check;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +28,20 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public ResponseEntity<List<CategoryResponse>> getAll() {
+
         List<Category> categories = repository.findAll();
-        List<CategoryResponse> categoryResponse = categories.stream().map(item -> mapper.forResponse().map(item, CategoryResponse.class)).toList();
+
+        List<CategoryResponse> categoryResponse = categories.stream()
+                .map(category -> {
+                    Set<Integer> set = repository.getArticlesById(category.getId());
+                    CategoryResponse categoryResponse2 = new CategoryResponse();
+                    categoryResponse2.setId(category.getId());
+                    categoryResponse2.setName(category.getName());
+                    categoryResponse2.setArticles(set);
+                    categoryResponse2.setParentId(category.getParent() != null ? category.getParent().getId() : 0);
+                    return categoryResponse2;
+                }).toList();
+
         return ResponseEntity.ok(categoryResponse);
     }
 
@@ -50,10 +62,10 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public ResponseEntity<UpdateCategory> update(UpdateCategory category,int id) {
+    public ResponseEntity<UpdateCategory> update(UpdateCategory category, int id) {
         Category foundCategory = repository.findById(category.getId()).orElseThrow(
                 () -> new CategoryNotFoundException("Category not found with id:" + category.getId()));
-        CheckIds.check(foundCategory.getId(),id);
+        CheckIds.check(foundCategory.getId(), id);
         repository.save(foundCategory);
         return ResponseEntity.ok(category);
     }

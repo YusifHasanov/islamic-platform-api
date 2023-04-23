@@ -12,22 +12,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateArticle {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
     @NotNull(message = "PublishedAt can not be empty")
-    Date publishedAt;
+    String publishedAt;
+
     @NotBlank(message = "Title is required")
     String title;
 
     @NotBlank(message = "Content is required")
     String content;
+
+    @NotBlank(message = "Author is required")
+    int author_id;
+
+    @NotNull(message = "Categories is required")
+    Set<Integer> categories;
 }
