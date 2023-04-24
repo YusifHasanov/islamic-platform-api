@@ -17,8 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,12 +37,14 @@ public class CategoryService implements ICategoryService {
 
         List<CategoryResponse> categoryResponse = categories.stream()
                 .map(category -> {
-                    Set<Integer> set = repository.getArticlesById(category.getId());
+                    Set<Integer> articles = repository.getArticlesById(category.getId());
                     CategoryResponse categoryResponse2 = new CategoryResponse();
                     categoryResponse2.setId(category.getId());
                     categoryResponse2.setName(category.getName());
-                    categoryResponse2.setArticles(set);
+                    categoryResponse2.setArticles(articles);
+                    categoryResponse2.setSubCategories(repository.findCategoriesByParentId(category.getId()));
                     categoryResponse2.setParentId(category.getParent() != null ? category.getParent().getId() : 0);
+
                     return categoryResponse2;
                 }).toList();
 
@@ -52,14 +57,46 @@ public class CategoryService implements ICategoryService {
                 () -> new CategoryNotFoundException("Category not found with id:" + id));
         CategoryResponse response = mapper.forResponse()
                 .map(foundCategory, CategoryResponse.class);
+        response.setSubCategories(repository.findCategoriesByParentId(foundCategory.getId()));
         return ResponseEntity.ok(response);
     }
 
     @Override
     public ResponseEntity<CreateCategory> add(CreateCategory category) {
-        Category mappedCategory = mapper.forRequest().map(category, Category.class);
-        repository.save(mappedCategory);
+
+        Category parentCategory = category.getParentId() == 0 ? null : repository.findById(category.getParentId())
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with id:" + category.getParentId()));
+        Category newCategory = new Category();
+        Set<Category> children = repository.findCategoriesByParentIdRetrunCategories(category.getParentId()) !=null ?
+                repository.findCategoriesByParentIdRetrunCategories(category.getParentId()) : new HashSet<>();
+
+        newCategory.setName(category.getName());
+        newCategory.setParent(parentCategory);
+
+        // TODO: check if subcategories are valid
+        // TODO: check if subcategories are not parent of this category
+        // TODO: if all is ok, add subcategories to this category
+
+        if (category.getSubCategories() == null) {
+            newCategory.setChildren(new HashSet<>());
+        } else {
+            Set<Category> subCategories = new HashSet<>();
+            category.getSubCategories().forEach(subCategory -> {
+                Category foundCategory = repository.findById(subCategory).orElseThrow(
+                        () -> new CategoryNotFoundException("Category not found with id:" + subCategory));
+                foundCategory.setParent(newCategory);
+                subCategories.add(foundCategory);
+                System.out.println(foundCategory);
+                System.out.println(subCategories);
+                repository.save(foundCategory);
+            });
+            newCategory.setChildren(subCategories);
+        }
+
+        repository.save(newCategory);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
+
     }
 
     @Override
@@ -78,6 +115,9 @@ public class CategoryService implements ICategoryService {
         }
         if (category.getName() != null) {
             foundCategory.setName(category.getName());
+        }
+        if (category.getSubCategories() != null){
+            foundCategory.setChildren(repository.findCategoriesByParentIdRetrunCategories(foundCategory.getId()));
         }
 
         repository.save(foundCategory);

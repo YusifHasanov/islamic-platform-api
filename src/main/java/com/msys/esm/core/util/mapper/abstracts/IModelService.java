@@ -4,4 +4,6 @@ import org.modelmapper.ModelMapper;
 public interface IModelService {
     ModelMapper forResponse();
     ModelMapper forRequest();
+
+    ModelMapper forNestedRequest();
 }

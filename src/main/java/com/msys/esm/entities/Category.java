@@ -36,7 +36,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     Set<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Category> children =new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

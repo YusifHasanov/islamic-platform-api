@@ -18,4 +18,5 @@ public class CreateCategory {
     @NotBlank(message = "Name is required")
     String name;
     int parentId;
+    Set<Integer> subCategories;
 }

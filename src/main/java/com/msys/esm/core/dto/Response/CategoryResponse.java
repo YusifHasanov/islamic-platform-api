@@ -18,5 +18,6 @@ public class CategoryResponse {
     int id;
     String name;
     int parentId;
+    Set<Integer> subCategories;
     Set<Integer> articles;
 }

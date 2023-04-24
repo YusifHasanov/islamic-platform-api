@@ -19,18 +19,16 @@ public class CustomErrorController implements ErrorController {
             if (status == HttpStatus.NOT_FOUND.value()) {
                 return new ResponseEntity<>(new MessageAndStatusCode(
                         "Endpoint not found or deprecated"
-                        ,404), HttpStatus.NOT_FOUND);
-            }
-            else if (status == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                        , 404), HttpStatus.NOT_FOUND);
+            } else if (status == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return new ResponseEntity<>(new MessageAndStatusCode(
                         "Internal server error"
-                        ,500), HttpStatus.INTERNAL_SERVER_ERROR);
+                        , 500), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
         return new ResponseEntity<>(new MessageAndStatusCode(
                 "Unknown error"
-                ,500), HttpStatus.NOT_FOUND);
+                , 500), HttpStatus.NOT_FOUND);
     }
 
 

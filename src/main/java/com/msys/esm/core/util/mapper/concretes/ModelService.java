@@ -26,4 +26,12 @@ public class ModelService implements IModelService {
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
         return this.modelMapper;
     }
+    @Override
+    public ModelMapper forNestedRequest() {
+        this.modelMapper.getConfiguration()
+                .setAmbiguityIgnored(true)
+                .setPreferNestedProperties(true)
+                .setMatchingStrategy(MatchingStrategies.STANDARD);
+        return this.modelMapper;
+    }
 }

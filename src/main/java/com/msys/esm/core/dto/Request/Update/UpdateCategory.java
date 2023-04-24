@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,5 @@ import lombok.experimental.FieldDefaults;
 public class UpdateCategory {
     String name;
     int parentId;
+    Set<Integer> subCategories;
 }
