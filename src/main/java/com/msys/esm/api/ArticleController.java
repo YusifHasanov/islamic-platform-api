@@ -27,8 +27,6 @@ public class ArticleController {
         return service.getById(id);
     }
 
-    // TODO: ManyToMany relation'daki bug'i hell etmek.
-    // TODO: Ola bilsin ki Video ve PlayListden bashqa butun dblari sifirdan yigilsin
     @PostMapping
     public ResponseEntity<CreateArticle> add(@Valid @RequestBody CreateArticle article) {
         return service.add(article);

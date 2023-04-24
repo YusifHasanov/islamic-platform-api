@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -36,57 +37,64 @@ public class VideoService implements IVideoService {
 
     VideoRepository videoRepository;
     ModelService mapper;
-    PlaylistService playlistService;
-    private static YouTube youTube;
-    private static YouTube.Search.List request;
-    private static YouTube.Playlists.List requestPlayList;
-    private static YouTube.PlaylistItems.List requestPlayListItemList;
-    private static SearchListResponse response;
+    private static final YouTube.Search.List request;
+    private static final YouTube.Playlists.List requestPlayList;
+    private static final YouTube.PlaylistItems.List requestPlayListItemList;
     private static PlaylistListResponse responsePlayList;
     private static PlaylistItemListResponse responsePlayListItemList;
 
     static {
 
-        youTube = ConnectYoutubeApi.youtubeService;
+        YouTube youTube = ConnectYoutubeApi.youtubeService;
 
         try {
-
 
             request = youTube.search().list("snippet");
             requestPlayList = youTube.playlists().list("snippet");
             responsePlayList = sendRequestPlayList();
-            response = sendRequest();
+//            SearchListResponse response = sendRequest();
             requestPlayListItemList = youTube.playlistItems().list("snippet");
             responsePlayListItemList = requestPlayListItemList
                     .setKey(ConnectYoutubeApi.DEVELOPER_KEY)
                     .setPlaylistId("PLU43-RoCoSfNG4hFDOwsh3TrRljtbuezZ").setMaxResults(50L).execute();
 
         } catch (IOException e) {
+
             throw new RuntimeException(e);
+
         }
 
     }
 
     @Override
         public ResponseEntity<List<VideoResponse>> getAll() {
+
             List<Video> videos = videoRepository.findAll();
             List<VideoResponse> responseVideos = videos.stream()
                     .map(v -> mapper.forResponse().map(v, VideoResponse.class)).toList();
+
             return ResponseEntity.ok(responseVideos);
+
         }
 
     @Override
     public ResponseEntity<VideoResponse> getById(String id) {
+
         Video video = videoRepository.findById(id)
                 .orElseThrow(() -> new VideoNotFoundException("Video not found with id: " + id));
+
         return ResponseEntity.ok(mapper.forResponse().map(video, VideoResponse.class));
     }
 
     @Override
     public ResponseEntity<CreateVideo> add(CreateVideo video) {
+
         Video mappedVideo = mapper.forRequest().map(video, Video.class);
+
         videoRepository.save(mappedVideo);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(video);
+
     }
 
     @Override
@@ -110,13 +118,15 @@ public class VideoService implements IVideoService {
                 .orElseThrow(() -> new VideoNotFoundException("Video not found with id: " + id));
 
         CheckIds.checkForPlayListOrVideo(findedVideo.getVideoId(), id);
+
         Video updatedVideo = mapper.forRequest().map(video, Video.class);
+
         updatedVideo.setVideoId(id);
+
         videoRepository.save(updatedVideo);
 
         return ResponseEntity.ok(video);
     }
-
     @Override
     public ResponseEntity<List<VideoResponse>> getByPlaylistId(String playlistId) {
 
@@ -131,7 +141,9 @@ public class VideoService implements IVideoService {
     }
 
 
+    // Hər gün saat 08:00, 16:00, 21:00 da update edəcək
     @Override
+    @Scheduled(cron = "0 0 8,16,21 ? * *")
     public void addOrUpdateVideos() {
 
         try {
@@ -201,9 +213,10 @@ public class VideoService implements IVideoService {
 
         Pageable pageable = PageRequest
                 .of(page-1,
-                        size > totalVideoList.size() ? totalVideoList.size() : size,
+                        Math.min(size, totalVideoList.size()),
                         Sort.by("publishedAt").descending());
-        List<VideoResponse> videoResponses = videoRepository.findVideosByPlaylistId(playListId, pageable).stream()
+        List<VideoResponse> videoResponses =
+                videoRepository.findVideosByPlaylistId(playListId, pageable).stream()
                 .map(video -> mapper.forResponse().map(video, VideoResponse.class))
                 .toList();
 
@@ -267,14 +280,13 @@ public class VideoService implements IVideoService {
 
             } while (nextPage != null);
 
-
         }
 
         return videoList;
 
     }
 
-    public static SearchListResponse sendRequest() throws IOException {
+  /*  public static SearchListResponse sendRequest() throws IOException {
         return request.setKey(ConnectYoutubeApi.DEVELOPER_KEY)
                 .setChannelId(ConnectYoutubeApi.CHANNEL_ID)
                 .setMaxResults(50L)
@@ -282,7 +294,7 @@ public class VideoService implements IVideoService {
                 .setType("video")
                 .execute();
     }
-
+*/
     public static PlaylistListResponse sendRequestPlayList() throws IOException {
         return requestPlayList
                 .setKey(ConnectYoutubeApi.DEVELOPER_KEY)

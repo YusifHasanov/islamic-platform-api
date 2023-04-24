@@ -9,10 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class ApiApplication {
 
     public static void main(String[] args) {
+        System.out.println();
         SpringApplication.run(ApiApplication.class, args);
-    }
-    @Scheduled(cron = "0 0 0/12 * * ?")
-    public void runEvery12PM(){
-        //TODO: Update video per 12 hours
     }
 }

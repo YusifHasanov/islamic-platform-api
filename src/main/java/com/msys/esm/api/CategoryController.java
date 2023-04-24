@@ -4,6 +4,7 @@ import com.msys.esm.business.abstracts.ICategoryService;
 import com.msys.esm.core.dto.Request.Create.CreateCategory;
 import com.msys.esm.core.dto.Request.Update.UpdateCategory;
 import com.msys.esm.core.dto.Response.CategoryResponse;
+import com.msys.esm.core.util.Messages.MessageAndStatusCode;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/categories")
 @FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class CategoryController {
+
     ICategoryService service;
 
     @GetMapping
@@ -36,13 +38,11 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateCategory> add(@Valid @RequestBody UpdateCategory category , @PathVariable int id) {
+    public ResponseEntity<UpdateCategory> update(@Valid @RequestBody UpdateCategory category , @PathVariable int id) {
         return service.update(category,id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CategoryResponse> delete(@PathVariable int id) {
-        return service.delete(id);
-    }
+    public ResponseEntity<MessageAndStatusCode> delete(@PathVariable int id) {return service.delete(id);}
 
 }

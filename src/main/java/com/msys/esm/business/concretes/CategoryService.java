@@ -5,6 +5,7 @@ import com.msys.esm.core.dto.Request.Create.CreateCategory;
 import com.msys.esm.core.dto.Request.Update.UpdateCategory;
 import com.msys.esm.core.dto.Response.CategoryResponse;
 import com.msys.esm.core.util.Exceptions.CategoryNotFoundException;
+import com.msys.esm.core.util.Messages.MessageAndStatusCode;
 import com.msys.esm.core.util.mapper.concretes.ModelService;
 import com.msys.esm.core.util.rules.CheckIds;
 import com.msys.esm.dataAccess.CategoryRepository;
@@ -63,19 +64,30 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public ResponseEntity<UpdateCategory> update(UpdateCategory category, int id) {
-        Category foundCategory = repository.findById(category.getId()).orElseThrow(
-                () -> new CategoryNotFoundException("Category not found with id:" + category.getId()));
+
+        Category foundCategory = repository.findById(id).orElseThrow(
+                () -> new CategoryNotFoundException("Category not found with id:" + id));
+
         CheckIds.check(foundCategory.getId(), id);
+
+        if (Integer.valueOf(category.getParentId()) != null) {
+            Category parentCategory = category.getParentId() == 0 ? null : repository.findById(category.getParentId()).orElseThrow(
+                    () -> new CategoryNotFoundException("Category not found with id:" + category.getParentId()));
+
+            foundCategory.setParent(parentCategory);
+        }
+        if (category.getName() != null) {
+            foundCategory.setName(category.getName());
+        }
+
         repository.save(foundCategory);
+
         return ResponseEntity.ok(category);
     }
 
     @Override
-    public ResponseEntity<CategoryResponse> delete(int id) {
-        Category foundCategory = repository.findById(id).orElseThrow(
-                () -> new CategoryNotFoundException("Category not found with id:" + id));
+    public ResponseEntity<MessageAndStatusCode> delete(int id) {
         repository.deleteById(id);
-        CategoryResponse response = mapper.forResponse().map(foundCategory, CategoryResponse.class);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return new ResponseEntity<>(new MessageAndStatusCode("Category deleted successfully", 200), HttpStatus.OK);
     }
 }
