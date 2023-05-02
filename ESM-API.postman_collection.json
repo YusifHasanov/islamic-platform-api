@@ -451,7 +451,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/articles/9",
+							"raw": "http://localhost:8080/api/articles/8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -460,7 +460,7 @@
 							"path": [
 								"api",
 								"articles",
-								"9"
+								"8"
 							]
 						}
 					},
@@ -473,7 +473,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"publishedAt\": \"2027-12-01 17:09:17\",\r\n    \"title\": \"Şafii mez3h2ebine gö3re orucu bozan hall4e5r nelerdir; bilerek orucu yemek kefaret gerektiriyor mu?\",\r\n    \"content\": \"1. Yemek ve i\\u00E7mek.\\r\",\r\n    \"authorId\": 3,\r\n    \"categories\": [4]\r\n}",
+							"raw": "{\r\n    \"publishedAt\": \"2027-12-01 17:09:17\",\r\n    \"title\": \"Destemaz almaq o3r34uc3u pozurmu?\",\r\n    \"content\": \"1. Yemek ve i\\u00E7mek.\\r\",\r\n    \"authorId\": 6,\r\n    \"categories\": [2]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -501,7 +501,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/articles/9",
+							"raw": "http://localhost:8080/api/articles/15",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -510,7 +510,7 @@
 							"path": [
 								"api",
 								"articles",
-								"9"
+								"15"
 							]
 						}
 					},
@@ -523,7 +523,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"publishedAt\": \"2050-11-31 17:09:17\",\r\n    \"title\": \"Abdesti bozan durumlar changed?\",\r\n    \"author_id\": 1,\r\n    \"categories\":[5]\r\n}",
+							"raw": "{\r\n    \"publishedAt\": \"2050-11-31 17:09:1454\",\r\n    \"author_id\": 11,\r\n    \"categories\":[3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -531,7 +531,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/articles/5",
+							"raw": "http://localhost:8080/api/articles/8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -540,7 +540,7 @@
 							"path": [
 								"api",
 								"articles",
-								"5"
+								"8"
 							]
 						}
 					},
@@ -577,7 +577,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/categories/8",
+							"raw": "http://localhost:8080/api/categories/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -586,7 +586,7 @@
 							"path": [
 								"api",
 								"categories",
-								"8"
+								"2"
 							]
 						}
 					},
@@ -599,7 +599,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Eseri\",\r\n  \"parentId\":0,\r\n  \"subCategories\": []\r\n}",
+							"raw": "{\r\n  \"name\": \"Shia\",\r\n  \"parentId\":0,\r\n  \"subCategories\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -628,7 +628,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"subCategories\": [12]\r\n}",
+							"raw": "{\r\n  \"parentId\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -636,7 +636,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/categories/8",
+							"raw": "http://localhost:8080/api/categories/25",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -645,7 +645,7 @@
 							"path": [
 								"api",
 								"categories",
-								"8"
+								"25"
 							]
 						}
 					},
@@ -657,7 +657,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/categories/11",
+							"raw": "http://localhost:8080/api/categories/25",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -666,7 +666,7 @@
 							"path": [
 								"api",
 								"categories",
-								"11"
+								"25"
 							]
 						}
 					},
@@ -703,7 +703,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/authors/3",
+							"raw": "http://localhost:8080/api/authors/17",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -712,7 +712,7 @@
 							"path": [
 								"api",
 								"authors",
-								"3"
+								"17"
 							]
 						}
 					},
@@ -754,7 +754,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Ramazan Heyderov\"\r\n}",
+							"raw": "{\r\n\r\n    \"image\": \"https://google.c4om\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -762,7 +762,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/authors/1",
+							"raw": "http://localhost:8080/api/authors/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -771,7 +771,7 @@
 							"path": [
 								"api",
 								"authors",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -783,7 +783,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/authors/1",
+							"raw": "http://localhost:8080/api/authors/15",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -792,7 +792,7 @@
 							"path": [
 								"api",
 								"authors",
-								"1"
+								"15"
 							]
 						}
 					},
@@ -824,13 +824,34 @@
 					"response": []
 				},
 				{
+					"name": "GET BOOK BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/books/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"books",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "POST (ADD) BOOK",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"Bidaye3tul3 hidaye\",\r\n    \"authorId\":4\r\n}",
+							"raw": "{\r\n    \"title\":\"Bidaye3tul3 hidaye\",\r\n    \"authorId\":17\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -854,6 +875,196 @@
 				},
 				{
 					"name": "UPDATE BOOK BY ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Imam Safeiin hayatasdi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/books/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"books",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE BOOK BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/books/21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"books",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Question Controller",
+			"item": [
+				{
+					"name": "GET ALL QUESTION",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET QUESTION BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/questions/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST (ADD) QUESTION",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"question\":\"Nefes almamamq orucu pozurmu?\",\r\n    \"answer\": \"Xeyr\",\r\n    \"categories\":[2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE QUESTION BY ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categories\": [2,3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/questions/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE QUESTION BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/questions/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"questions",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistic Controller",
+			"item": [
+				{
+					"name": "GET ALL STATISTICS",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE ALL STATISTIC",
 					"request": {
 						"method": "GET",
 						"header": []

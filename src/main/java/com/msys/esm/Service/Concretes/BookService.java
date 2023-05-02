@@ -1,6 +1,7 @@
 package com.msys.esm.Service.Concretes;
 
 import com.msys.esm.Core.Util.Exceptions.AuthorNotFoundException;
+import com.msys.esm.Core.Util.Mapper.Concretes.BookMapper;
 import com.msys.esm.Model.Author;
 import com.msys.esm.Repository.AuthorRepository;
 import com.msys.esm.Service.Abstracts.IBookService;
@@ -32,6 +33,7 @@ public class BookService implements IBookService {
     BookRepository repository;
     AuthorRepository authorRepository;
     ModelService mapper;
+    BookMapper bookMapper;
 
     @Override
     public ResponseEntity<List<BookResponse>> getAll() {
@@ -54,22 +56,20 @@ public class BookService implements IBookService {
     @Override
     public ResponseEntity<CreateBook> add(CreateBook book) {
 
-        Author author = authorRepository.findById(book.getAuthorId())
-                .orElseThrow(() -> new BookNotFoundException("Author not found with id: " + book.getAuthorId()));
-        Set<Book> books = author.getBooks() != null ? author.getBooks() : new HashSet<>();
-        Book createdBook = new Book();
-
-        createdBook.setTitle(book.getTitle());
-        createdBook.setAuthor(author);
-
-        books.add(createdBook);
-        author.setBooks(books);
-
-        repository.save(createdBook);
-        authorRepository.save(author);
+        if (authorRepository.existsAuthorById(book.getAuthorId()))
+            repository.save(bookMapper.mapCreateBookToBook(book));
+        else throw new AuthorNotFoundException("Author not found with id: " + book.getAuthorId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
 
+    }
+
+    @Override
+    public ResponseEntity<UpdateBook> update(UpdateBook book, int id) {
+        
+        repository.save(bookMapper.updateToBook(book, id));
+
+        return ResponseEntity.ok(book);
     }
 
     @Override
@@ -79,27 +79,6 @@ public class BookService implements IBookService {
         repository.deleteById(id);
         BookResponse BookREsponse = mapper.forResponse().map(book, BookResponse.class);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(BookREsponse);
-    }
-
-    @Override
-    public ResponseEntity<UpdateBook> update(UpdateBook book, int id) {
-        Book findedBook = repository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
-        CheckIds.check(findedBook.getId(), id);
-
-        if (book.getTitle() != null) findedBook.setTitle(book.getTitle());
-        else book.setTitle(findedBook.getTitle());
-        if (book.getAuthorId() != 0) {
-            Author author = authorRepository.findById(book.getAuthorId())
-                    .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + book.getAuthorId()));
-            findedBook.setAuthor(author);
-        }else{
-            book.setAuthorId(findedBook.getAuthor().getId());
-        }
-
-        repository.save(findedBook);
-
-        return ResponseEntity.ok(book);
     }
 
 

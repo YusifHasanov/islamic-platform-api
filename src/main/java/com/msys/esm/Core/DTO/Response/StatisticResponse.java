@@ -14,7 +14,7 @@ public class StatisticResponse {
 
     int id;
     String viewCount;
+    String platformName;
     String subscriberCount;
-    boolean hiddenSubscriber;
     String videoCount;
 }

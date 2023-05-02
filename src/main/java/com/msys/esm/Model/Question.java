@@ -4,15 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.msys.esm.Core.Util.Validators.Concretes.TrimValidator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.builder.EqualsExclude;
+import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"categories"},doNotUseGetters = true)
+@EqualsAndHashCode(exclude = {"categories"},doNotUseGetters = true)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,7 +38,10 @@ public class Question  {
     @Column(name = "answer")
     String answer;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ToStringExclude
+    @EqualsExclude
+    @HashCodeExclude
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "question_category",
             joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),

@@ -12,7 +12,5 @@ public interface IStatisticsService {
 
     ResponseEntity<StatisticResponse> getById(int id);
 
-    ResponseEntity<CreateStatistic> add(CreateStatistic statisticResponse);
-    ResponseEntity<UpdateStatistic> update(UpdateStatistic statisticResponse,int id);
-    ResponseEntity<StatisticResponse> delete(int id);
+    void updateStatistic();
 }

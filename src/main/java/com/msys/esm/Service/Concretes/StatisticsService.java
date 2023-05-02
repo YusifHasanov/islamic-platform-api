@@ -1,5 +1,6 @@
 package com.msys.esm.Service.Concretes;
 
+import com.msys.esm.Service.Abstracts.IStatistic;
 import com.msys.esm.Service.Abstracts.IStatisticsService;
 import com.msys.esm.Core.DTO.Request.Create.CreateStatistic;
 import com.msys.esm.Core.DTO.Request.Update.UpdateStatistic;
@@ -22,6 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class StatisticsService implements IStatisticsService {
+
+    IStatistic statistic;
+
     StatisticRepository repository;
     ModelService mapper;
 
@@ -43,29 +47,15 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
-    public ResponseEntity<CreateStatistic> add(CreateStatistic statisticResponse) {
-        Statistic statistic = mapper.forRequest().map(statisticResponse, Statistic.class);
-        repository.save(statistic);
-        return ResponseEntity.status(HttpStatus.CREATED).body(statisticResponse);
+    public void updateStatistic() {
+        List<Statistic> statistics = repository.findAll();
+        for (Statistic updatedStatistic: statistics) {
+            updatedStatistic.setSubscriberCount(String.valueOf(statistic.getSubscriberCount()));
+            updatedStatistic.setViewCount(String.valueOf(statistic.getViewCount()));
+            updatedStatistic.setVideoCount(String.valueOf(statistic.getVideoCount()));
+            updatedStatistic.setPlatformName(statistic.getPlatform().toString());
+            repository.save(updatedStatistic);
+        }
     }
 
-    @Override
-    public ResponseEntity<UpdateStatistic> update(UpdateStatistic statisticResponse, int id) {
-        Statistic statistic = repository.findById(id).orElseThrow(() ->
-                new StatisticNotFoundException("Statistic not found with id: " + id));
-        CheckIds.check(statistic.getId(), id);
-        mapper.forRequest().map(statisticResponse, statistic);
-        repository.save(statistic);
-        return ResponseEntity.ok(statisticResponse);
-    }
-
-    @Override
-    public ResponseEntity<StatisticResponse> delete(int id) {
-        Statistic statistic = repository.findById(id).orElseThrow(() ->
-                new StatisticNotFoundException("Statistic not found with id: " + id));
-        CheckIds.check(statistic.getId(), id);
-        repository.delete(statistic);
-        StatisticResponse statisticResponse = mapper.forResponse().map(statistic, StatisticResponse.class);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(statisticResponse);
-    }
 }

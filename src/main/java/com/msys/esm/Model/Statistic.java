@@ -22,7 +22,10 @@ public class Statistic  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @NotNull
+    @Convert(converter = TrimValidator.class)
+    @Column(name = "platform_name")
+    String platformName;
+
     @Convert(converter = TrimValidator.class)
     @Column(name = "view_count")
     String viewCount;
@@ -32,10 +35,6 @@ public class Statistic  {
     @Convert(converter = TrimValidator.class)
     String subscriberCount;
 
-    @Column(name = "hidden_subscriber")
-    boolean hiddenSubscriber;
-
-    @NotNull
     @Convert(converter = TrimValidator.class)
     @Column(name = "video_count")
     String videoCount;

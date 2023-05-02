@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.builder.EqualsExclude;
 import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +31,10 @@ public class Category {
     @Column(name = "name", unique = true)
     String name;
 
+    @ToStringExclude
+    @EqualsExclude
+    @HashCodeExclude
+    @JsonIgnore
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     Set<Question> questions;
 
@@ -42,7 +48,7 @@ public class Category {
     @EqualsAndHashCode.Exclude
     private Set<Category> children =new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "parent_id")
     @JsonIgnore
     @ToString.Exclude

@@ -26,11 +26,11 @@ public class Book {
 
     @NotBlank @Size(max = 50)
     @Convert(converter = TrimValidator.class)
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     String title;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonIgnore
     @HashCodeExclude
     @ToString.Exclude

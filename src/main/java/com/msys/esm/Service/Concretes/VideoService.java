@@ -1,8 +1,10 @@
 package com.msys.esm.Service.Concretes;
 
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.*;
-import com.msys.esm.Service.Abstracts.IVideoService;
+import com.google.api.services.youtube.model.Playlist;
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.PlaylistListResponse;
 import com.msys.esm.Core.DTO.Request.Create.CreateVideo;
 import com.msys.esm.Core.DTO.Request.Update.UpdateVideo;
 import com.msys.esm.Core.DTO.Response.PaginitionVideosResponse;
@@ -12,8 +14,9 @@ import com.msys.esm.Core.Util.Exceptions.PlaylistNotFoundException;
 import com.msys.esm.Core.Util.Exceptions.VideoNotFoundException;
 import com.msys.esm.Core.Util.Mapper.Concretes.ModelService;
 import com.msys.esm.Core.Util.Rules.CheckIds;
-import com.msys.esm.Repository.VideoRepository;
 import com.msys.esm.Model.Video;
+import com.msys.esm.Repository.VideoRepository;
+import com.msys.esm.Service.Abstracts.IVideoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -286,15 +289,6 @@ public class VideoService implements IVideoService {
 
     }
 
-  /*  public static SearchListResponse sendRequest() throws IOException {
-        return request.setKey(ConnectYoutubeApi.DEVELOPER_KEY)
-                .setChannelId(ConnectYoutubeApi.CHANNEL_ID)
-                .setMaxResults(50L)
-                .setOrder("date")
-                .setType("video")
-                .execute();
-    }
-*/
     public static PlaylistListResponse sendRequestPlayList() throws IOException {
         return requestPlayList
                 .setKey(ConnectYoutubeApi.DEVELOPER_KEY)

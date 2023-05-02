@@ -1,5 +1,6 @@
 package com.msys.esm.Service.Concretes;
 
+import com.msys.esm.Core.Util.Mapper.Concretes.AuthorMapper;
 import com.msys.esm.Repository.ArticleRepository;
 import com.msys.esm.Repository.BookRepository;
 import com.msys.esm.Service.Abstracts.IAuthorService;
@@ -30,6 +31,8 @@ public class AuthorService implements IAuthorService {
     BookRepository bookRepository;
     ArticleRepository articleRepository;
     ModelService mapper;
+    AuthorMapper authorMapper;
+
 
     @Override
     public ResponseEntity<List<AuthorResponse>> getAll() {
@@ -40,7 +43,7 @@ public class AuthorService implements IAuthorService {
 
         List<AuthorResponse> responseAuthors = authors
                 .stream()
-                .map(a -> mapper.setIntegerTosetBook().map(a, AuthorResponse.class)).toList();
+                .map(authorMapper::mapToAuthorResponse).toList();
 
         return ResponseEntity.ok(responseAuthors);
 
@@ -53,7 +56,7 @@ public class AuthorService implements IAuthorService {
                 new AuthorNotFoundException("author not found with id: " + id));
 
         return author == null ? ResponseEntity.notFound().build() :
-                ResponseEntity.ok(mapper.setIntegerTosetBook().map(author, AuthorResponse.class));
+                ResponseEntity.ok(authorMapper.mapToAuthorResponse(author));
 
     }
 
@@ -76,9 +79,7 @@ public class AuthorService implements IAuthorService {
 
         CheckIds.check(updateAuthor.getId(), id);
 
-        if (author.getName() != null) updateAuthor.setName(author.getName());
-        if (author.getImage() != null) updateAuthor.setImage(author.getImage());
-
+        authorMapper.mapToAuthor(author, updateAuthor);
 
         repository.save(updateAuthor);
 
@@ -91,18 +92,19 @@ public class AuthorService implements IAuthorService {
 
         Author author = repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + id));
+        Hibernate.initialize(author.getBooks());
 
         articleRepository.getArticleIdsByAuthorId(id).forEach(articleRepository::deleteArticle);
         articleRepository.getArticleIdsByAuthorId(id).forEach(articleRepository::deleteById);
 
 
-        Hibernate.initialize(author.getBooks());
+
         bookRepository.deleteByAuthorId(repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + id)).getId());
         repository.delete(repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + id)));
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mapper.forResponse().map(author, AuthorResponse.class));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(authorMapper.mapToAuthorResponse(author));
 
     }
 }

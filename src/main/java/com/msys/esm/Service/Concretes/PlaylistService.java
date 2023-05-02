@@ -32,8 +32,8 @@ public class PlaylistService implements IPlaylistService {
     PlaylistRepository playlistRepository;
     ModelService mapper;
     VideoRepository videoRepository;
-    private static YouTube youTube;
-    private static YouTube.Playlists.List requestPlayList;
+    private static final YouTube youTube;
+    private static final YouTube.Playlists.List requestPlayList;
     private static PlaylistListResponse responsePlayList;
 
     static {

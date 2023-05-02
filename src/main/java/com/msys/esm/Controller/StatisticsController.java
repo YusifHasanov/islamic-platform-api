@@ -26,16 +26,9 @@ public class StatisticsController {
     public ResponseEntity<StatisticResponse> getById(@PathVariable int id){
         return service.getById(id);
     }
-    @PostMapping
-    public ResponseEntity<CreateStatistic> add(@RequestBody CreateStatistic statisticRequest){
-        return service.add(statisticRequest);
-    }
-    @PutMapping("/{id}")
-    public ResponseEntity<UpdateStatistic> update(@PathVariable int id, @RequestBody UpdateStatistic statisticRequest){
-        return service.update(statisticRequest, id);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<StatisticResponse> delete(@PathVariable int id){
-        return service.delete(id);
+
+    @PutMapping
+    public void updateStatistic(){
+        service.updateStatistic();
     }
 }

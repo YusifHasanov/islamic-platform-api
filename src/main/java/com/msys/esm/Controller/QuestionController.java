@@ -1,10 +1,13 @@
 package com.msys.esm.Controller;
+import com.msys.esm.Service.Abstracts.IQuestionService;
 import com.msys.esm.Service.Concretes.QuestionService;
 import com.msys.esm.Core.DTO.Request.Create.CreateQuestion;
 import com.msys.esm.Core.DTO.Request.Update.UpdateQuestion;
 import com.msys.esm.Core.DTO.Response.QuestionResponse;
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/questions")
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class QuestionController {
-    private final QuestionService service;
+    IQuestionService service;
 
     @GetMapping
 

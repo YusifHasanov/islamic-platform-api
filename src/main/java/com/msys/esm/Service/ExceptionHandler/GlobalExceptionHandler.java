@@ -1,8 +1,8 @@
 package com.msys.esm.Service.ExceptionHandler;
 
+import com.msys.esm.Core.Util.Exceptions.ArticleAlreadyExsitsException;
 import com.msys.esm.Core.Util.Exceptions.Global.ErrorResponse;
 import com.msys.esm.Core.Util.Exceptions.Global.NotFoundException;
-import jakarta.validation.UnexpectedTypeException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.rmi.UnexpectedException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -30,39 +29,46 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public  ResponseEntity<Object> handleVideoException(NotFoundException ex) {
+    public  ResponseEntity<Object> handleException(NotFoundException ex) {
         ErrorResponse response = new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public  ResponseEntity<Object> handleVideoException(HttpMessageNotReadableException ex) {
+    public  ResponseEntity<Object> handleException(HttpMessageNotReadableException ex) {
         ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public  ResponseEntity<Object> handleVideoException(IllegalArgumentException ex) {
-        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    public  ResponseEntity<Object> handleException(IllegalArgumentException ex) {
+        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public  ResponseEntity<Object> handleVideoException(HttpRequestMethodNotSupportedException ex) {
+    public  ResponseEntity<Object> handleException(HttpRequestMethodNotSupportedException ex) {
         ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage().split(":")[0], HttpStatus.METHOD_NOT_ALLOWED.value());
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(response);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public  ResponseEntity<Object> handleVideoException(DataIntegrityViolationException ex) {
-        String message = "Cannot insert record because it violates a unique constraint.";
-        ErrorResponse response = new ErrorResponse(message, HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    public  ResponseEntity<Object> handleException(DataIntegrityViolationException ex) {
+        // get the message from the exception that which column is already exsits
+        ErrorResponse response = new ErrorResponse(ex.getMostSpecificCause().getMessage()
+                .split("=")[1]
+                .replaceAll("[()]","'"), HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ArticleAlreadyExsitsException.class)
+    public  ResponseEntity<Object> handleArticleException(ArticleAlreadyExsitsException ex) {
+        ErrorResponse response = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
 }
