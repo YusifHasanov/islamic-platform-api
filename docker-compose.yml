@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:15.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 3OJ461mmS8Of
+      POSTGRES_DB: db
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      my-network:
+        aliases:
+          - db
+
+  api:
+    image: openjdk:19-alpine
+    environment:
+      DEVELOPER_KEY: AIzaSyDlfU5gNKiS8qEqW8yW7VHLNJO7h0vawNw
+    ports:
+      - '8080:8080'
+    command: [ "java", "-jar", "/app/esm-0.0.1-SNAPSHOT.jar" ]
+    volumes:
+      - ./target:/app
+    networks:
+      - my-network
+
+volumes:
+  db:
+    driver: local
+networks:
+  my-network:
+    driver: bridge

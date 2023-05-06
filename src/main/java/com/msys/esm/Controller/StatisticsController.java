@@ -22,13 +22,8 @@ public class StatisticsController {
     public ResponseEntity<List<StatisticResponse>> getAll(){
         return service.getAll();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<StatisticResponse> getById(@PathVariable int id){
-        return service.getById(id);
-    }
-
-    @PutMapping
-    public void updateStatistic(){
-        service.updateStatistic();
+    @GetMapping("/{platformName}")
+    public ResponseEntity<StatisticResponse> getById(@PathVariable String platformName){
+        return service.getByPlatformName(platformName);
     }
 }
