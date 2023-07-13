@@ -10,7 +10,7 @@ WORKDIR /app
 # Copy the application files
 COPY ./target /app
 
-EXPOSE 8080
+EXPOSE 8080:8080
 
 # Specify the command to run when the container starts
 CMD ["java", "-jar", "/app/esm-0.0.1-SNAPSHOT.jar"]
