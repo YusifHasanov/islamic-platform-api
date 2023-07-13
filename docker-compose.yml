@@ -20,7 +20,7 @@ services:
   api:
     image: openjdk:19-alpine
     environment:
-      DEVELOPER_KEY: AIzaSyDlfU5gNKiS8qEqW8yW7VHLNJO7h0vawNw
+      DEVELOPER_KEY: AIzaSyCOlR3C1Mrf35n-_GozHaPuc9KJGV_Hd90
     ports:
       - '8080:8080'
     command: [ "java", "-jar", "/app/esm-0.0.1-SNAPSHOT.jar" ]

@@ -13,7 +13,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-06T22:01:02+0400",
+    date = "2023-06-12T20:30:54+0400",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.1 (Oracle Corporation)"
 )
 public class CategoryMapperImpl implements CategoryMapper {
