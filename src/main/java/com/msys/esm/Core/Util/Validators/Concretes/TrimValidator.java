@@ -2,7 +2,9 @@ package com.msys.esm.Core.Util.Validators.Concretes;
 
 import jakarta.persistence.AttributeConverter;
 import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TrimValidator implements AttributeConverter<String, String> {
     @Override
     public String convertToDatabaseColumn(String s) {
