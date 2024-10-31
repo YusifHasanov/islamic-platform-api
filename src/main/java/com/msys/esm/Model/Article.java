@@ -22,7 +22,7 @@ public class Article {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column(name = "published_at")
     @Convert(converter = TrimValidator.class)
@@ -38,14 +38,14 @@ public class Article {
     @Convert(converter = TrimValidator.class)
     String content;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id")
-    Author author;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "author_id")
+//    Author author;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "article_category",
-            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
-    Set<Category> categories;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(name = "article_category",
+//            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+//    Set<Category> categories;
 
 }

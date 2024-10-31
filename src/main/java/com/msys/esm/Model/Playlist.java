@@ -34,5 +34,5 @@ public class Playlist  {
     String title;
 
     @Column(name = "video_count")
-    int videoCount;
+    Integer videoCount;
 }

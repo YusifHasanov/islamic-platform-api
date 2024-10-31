@@ -24,7 +24,7 @@ public class Author  {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @NotBlank
     @Size(max = 35)
@@ -37,11 +37,11 @@ public class Author  {
     @Column(name = "image")
     String image;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<Article> articles;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    Set<Article> articles;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    Set<Book> books;
+//    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+//    Set<Book> books;
 
 }

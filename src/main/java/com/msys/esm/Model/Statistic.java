@@ -18,7 +18,7 @@ public class Statistic  {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Convert(converter = TrimValidator.class)
     @Column(name = "platform_name")

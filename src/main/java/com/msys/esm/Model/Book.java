@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeExclude;
 @Setter
 @Getter
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -29,13 +30,15 @@ public class Book {
     @Column(name = "title", unique = true)
     String title;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    @HashCodeExclude
-    @ToString.Exclude
-    @EqualsExclude
-    @JoinColumn(name = "author_id")
-    Author author;
+    String image;
+
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+//    @JsonIgnore
+//    @HashCodeExclude
+//    @ToString.Exclude
+//    @EqualsExclude
+//    @JoinColumn(name = "author_id")
+//    Author author;
 
 }

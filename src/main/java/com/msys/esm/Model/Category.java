@@ -24,35 +24,37 @@ public class Category {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
+
+    Integer parentId;
 
     @NotBlank
     @Convert(converter = TrimValidator.class)
     @Column(name = "name", unique = true)
     String name;
 
-    @ToStringExclude
-    @EqualsExclude
-    @HashCodeExclude
-    @JsonIgnore
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    Set<Question> questions;
+//    @ToStringExclude
+//    @EqualsExclude
+//    @HashCodeExclude
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+//    Set<Question> questions;
 
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Set<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Category> children =new HashSet<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy="parent", fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Set<Category> children =new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "parent_id")
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Category parent;
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "parent_id")
+//    @JsonIgnore
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Category parent;
 
 }

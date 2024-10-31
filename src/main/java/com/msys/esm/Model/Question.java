@@ -26,7 +26,7 @@ public class Question  {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @NotBlank
     @Convert(converter = TrimValidator.class)
@@ -38,14 +38,14 @@ public class Question  {
     @Column(name = "answer")
     String answer;
 
-    @ToStringExclude
-    @EqualsExclude
-    @HashCodeExclude
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    @JsonIgnore
-    @JoinTable(name = "question_category",
-            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
-    Set<Category> categories;
+//    @ToStringExclude
+//    @EqualsExclude
+//    @HashCodeExclude
+//    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    @JoinTable(name = "question_category",
+//            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
+//    Set<Category> categories;
 
 }

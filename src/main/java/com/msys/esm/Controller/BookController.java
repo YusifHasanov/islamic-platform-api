@@ -33,8 +33,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateBook> add(@Valid @RequestBody CreateBook book) {
-        System.out.println(book);
+    public ResponseEntity<?> add(@Valid @RequestBody CreateBook book) {
         return service.add(book);
     }
 

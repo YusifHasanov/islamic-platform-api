@@ -19,4 +19,8 @@ public class CreateBook {
 
     @NotNull(message = "Author Id is required")
     Integer authorId;
+
+    @NotNull(message = "Image can not be null")
+    String image;
+
 }

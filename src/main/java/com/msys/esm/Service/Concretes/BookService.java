@@ -3,6 +3,8 @@ package com.msys.esm.Service.Concretes;
 import com.msys.esm.Core.Util.Exceptions.AuthorNotFoundException;
 import com.msys.esm.Core.Util.Mapper.Concretes.BookMapper;
 import com.msys.esm.Model.Author;
+import com.msys.esm.Model.AuthorBook;
+import com.msys.esm.Repository.AuthorBookRepository;
 import com.msys.esm.Repository.AuthorRepository;
 import com.msys.esm.Service.Abstracts.IBookService;
 import com.msys.esm.Core.DTO.Request.Create.CreateBook;
@@ -34,6 +36,8 @@ public class BookService implements IBookService {
     AuthorRepository authorRepository;
     ModelService mapper;
     BookMapper bookMapper;
+    AuthorBookRepository authorBookRepository;
+
 
     @Override
     public ResponseEntity<List<BookResponse>> getAll() {
@@ -54,14 +58,26 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public ResponseEntity<CreateBook> add(CreateBook book) {
+    public ResponseEntity<?> add(CreateBook request) {
+        if (!authorRepository.existsAuthorById(request.getAuthorId())){
+            throw new AuthorNotFoundException("Author not found with id: " + request.getAuthorId());
+        }
 
-        if (authorRepository.existsAuthorById(book.getAuthorId()))
-            repository.save(bookMapper.mapCreateBookToBook(book));
-        else throw new AuthorNotFoundException("Author not found with id: " + book.getAuthorId());
+        Book book = Book.builder()
+                .title(request.getTitle())
+                .image(request.getImage())
+                .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(book);
+        book = repository.save(book);
 
+        AuthorBook authorBook = AuthorBook.builder()
+                .authorId(request.getAuthorId())
+                .bookId(book.getId())
+                .build();
+
+        authorBookRepository.save(authorBook);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
