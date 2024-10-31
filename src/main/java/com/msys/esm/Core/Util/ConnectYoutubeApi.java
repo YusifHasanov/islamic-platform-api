@@ -20,11 +20,11 @@ public class ConnectYoutubeApi {
 
 
     static {
-        if (System.getenv("DEVELOPER_KEY") == null) {
-
-            throw new ExceptionInInitializerError("DEVELOPER_KEY is null or empty");
-
-        }
+//        if (System.getenv("DEVELOPER_KEY") == null) {
+//
+//            throw new ExceptionInInitializerError("DEVELOPER_KEY is null or empty");
+//
+//        }
 
         DEVELOPER_KEY = "AIzaSyDlfU5gNKiS8qEqW8yW7VHLNJO7h0vawNw";
 
